@@ -27,7 +27,7 @@ const ArtisanStoreManagement = () => {
 
   return (
     <div>
-      <h2>Artisan Store Management & Creation (Admin Side)</h2>
+      <h2>Artisan Store Management & Creation</h2>
 
       <ProductForm onSubmit={addProduct} />
 

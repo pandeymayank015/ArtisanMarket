@@ -6,6 +6,10 @@ body {
     padding: 0;
     background: linear-gradient(to right, #add8e6, #ffffe0); /* Light blue to light yellow gradient */
     font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Ensure the body takes at least the full height of the viewport */
   }
   
   /* Main container styles */
@@ -21,6 +25,7 @@ body {
   /* Heading styles */
   h2 {
     color: #333;
+    text-align: center;
   }
   
   /* ProductForm styles */
@@ -46,7 +51,7 @@ body {
   }
   
   button {
-    background-color: #4caf50;
+    background-color: #ffcc00; /* Yellow color */
     color: white;
     padding: 10px 15px;
     border: none;
@@ -55,7 +60,7 @@ body {
   }
   
   button:hover {
-    background-color: #45a049;
+    background-color: #e6b800; /* Darker shade of yellow on hover */
   }
   
   /* ProductList styles */
