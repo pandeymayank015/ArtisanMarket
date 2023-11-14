@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import './ArtisanStoreManagement.css';
 import ProductList from './ProductList';
 import ProductForm from './ProductForm';
+import ModifyProductForm from './ModifyProductForm';
 
 const ArtisanStoreManagement = () => {
   const [products, setProducts] = useState([]);
@@ -26,16 +27,26 @@ const ArtisanStoreManagement = () => {
   };
 
   return (
-    <div>
-      <h2>Artisan Store Management & Creation</h2>
+    <div className="container">
+      <div className="box">
+        <h2>Add Product</h2>
+        <ProductForm onSubmit={addProduct} />
+      </div>
 
-      <ProductForm onSubmit={addProduct} />
+      <div className="box">
+        <h2>Modify Product</h2>
+        <ModifyProductForm products={products} onUpdate={updateProduct} />
+      </div>
 
-      <ProductList
-        products={products}
-        onUpdate={updateProduct}
-        onRemove={removeProduct}
-      />
+      <div className="box">
+        <h2>Delete Product</h2>
+        {/* Your deletion functionality here */}
+      </div>
+
+      <div className="box">
+        <h2>List Products</h2>
+        <ProductList products={products} onUpdate={updateProduct} onRemove={removeProduct} />
+      </div>
     </div>
   );
 };
