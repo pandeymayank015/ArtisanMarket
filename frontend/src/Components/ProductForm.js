@@ -22,7 +22,7 @@ const ProductForm = ({ onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h3>Add Product</h3>
+      {/* <h3>Add Product</h3> */}
       <label>
         Product Name:
         <input

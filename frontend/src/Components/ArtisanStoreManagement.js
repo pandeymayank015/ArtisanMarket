@@ -4,9 +4,11 @@ import './ArtisanStoreManagement.css';
 import ProductList from './ProductList';
 import ProductForm from './ProductForm';
 import ModifyProductForm from './ModifyProductForm';
+import DeleteProductForm from './DeleteProductForm';
 
 const ArtisanStoreManagement = () => {
   const [products, setProducts] = useState([]);
+  const [showProductList, setShowProductList] = useState(false);
 
   const addProduct = (product) => {
     setProducts([...products, product]);
@@ -25,6 +27,9 @@ const ArtisanStoreManagement = () => {
       prevProducts.filter((product) => product.id !== productId)
     );
   };
+  const handleShowProductList = () => {
+    setShowProductList(true);
+  };
 
   return (
     <div className="container">
@@ -35,17 +40,20 @@ const ArtisanStoreManagement = () => {
 
       <div className="box">
         <h2>Modify Product</h2>
-        <ModifyProductForm products={products} onUpdate={updateProduct} />
+          <ModifyProductForm products={products} onUpdate={updateProduct} />
       </div>
 
       <div className="box">
         <h2>Delete Product</h2>
-        {/* Your deletion functionality here */}
+          <DeleteProductForm products={products} onRemove={removeProduct} />
       </div>
 
       <div className="box">
-        <h2>List Products</h2>
-        <ProductList products={products} onUpdate={updateProduct} onRemove={removeProduct} />
+      <h2>List Product(s)</h2>
+        <button onClick={handleShowProductList}>List All Products</button>
+        {showProductList && (
+          <ProductList products={products} onUpdate={updateProduct} onRemove={removeProduct} />
+        )}
       </div>
     </div>
   );
