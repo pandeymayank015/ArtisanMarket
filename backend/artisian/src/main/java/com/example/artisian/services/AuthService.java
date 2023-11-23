@@ -67,7 +67,7 @@ public class AuthService {
                         roles));
     }
 
-    public ResponseEntity<?> registerUser(RegisterDTO registerDTO, MultipartFile image) throws IOException {
+    public ResponseEntity<?> registerUser(RegisterDTO registerDTO) throws IOException {
         if (userRepository.existsByUsername(registerDTO.getUsername())) {
             return ResponseEntity.badRequest().body(new MessageResponseDTO("Error: Username is already taken!"));
         }
@@ -76,7 +76,7 @@ public class AuthService {
             return ResponseEntity.badRequest().body(new MessageResponseDTO("Error: Email is already in use!"));
         }
 
-        var compressImage =  ImageUtils.compressImage(image.getBytes());
+        var compressImage =  ImageUtils.compressImage(registerDTO.getImage().getBytes());
 
         String strRole = registerDTO.getRole();
         RoleEntity userRole;
