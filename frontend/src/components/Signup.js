@@ -1,28 +1,40 @@
 // src/Signup.js
 import React, { useState } from 'react';
 import axios from 'axios';
+import { url } from '../utils/ApiUrls'
 
 const Signup = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
+  const [image, setImage] = useState(null);
 
   const handleSignup = async () => {
     try {
       const formData = new FormData();
-      formData.append('data', JSON.stringify({ username, email, password, role }));
+      formData.append('username', username);
+      formData.append('email', email);
+      formData.append('password', password);
+      formData.append('role', role);
+      formData.append('image', image);
 
-      const response = await axios.post('/api/auth/register', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      console.log(formData);
+      const response = await axios.post(url +'/auth/register', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
 
       console.log(response.data);
     } catch (error) {
       console.error('Error during signup:', error);
     }
+  };
+
+  const handleImageChange = (e) => {
+    const selectedImage = e.target.files[0];
+    setImage(selectedImage);
   };
 
   return (
@@ -47,6 +59,10 @@ const Signup = () => {
           <option value="admin">Admin</option>
           <option value="artisan">Artisan</option>
         </select>
+        <br />
+
+        <label>Image:</label>
+        <input type="file" accept="image/*" onChange={handleImageChange} />
         <br />
 
         <button type="button" onClick={handleSignup}>
