@@ -1,6 +1,7 @@
 // src/Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
+import { url } from '../utils/ApiUrls'
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -8,8 +9,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('/api/auth/login', { username, password });
-
+      const response = await axios.post(url +'/auth/login', { username, password });
       console.log(response.data);
     } catch (error) {
       console.error('Error during login:', error);
