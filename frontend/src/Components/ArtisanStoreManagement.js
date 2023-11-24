@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import './ArtisanStoreManagement.css';
+import '../styles/ArtisanStoreManagement.css';
 import ProductList from './ProductList';
 import ProductForm from './ProductForm';
 import ModifyProductForm from './ModifyProductForm';
