@@ -31,15 +31,18 @@ const ProductForm = ({ onSubmit }) => {
         const addedProduct = await response.json();
         onSubmit(addedProduct);
 
+        alert("Product added!");
         // Clear the form after successful submission
         setProductName('');
         setProductDescription('');
         setProductPrice('');
         setProductCategory('');
+
       } else {
         console.error('Failed to add product:', response.statusText);
       }
     } catch (error) {
+      alert('Error adding product:', error);
       console.error('Error adding product:', error);
     }
   };

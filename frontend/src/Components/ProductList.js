@@ -1,9 +1,27 @@
-// ProductList.js
+import React, { useState, useEffect } from 'react';
+import { url } from '../utils/ApiUrls';
 
-import React from 'react';
-import { url } from '../utils/ApiUrls'
+const ProductList = ({ onUpdate, onRemove }) => {
+  const [products, setProducts] = useState([]);
 
-const ProductList = ({ products, onUpdate, onRemove }) => {
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch(url+'/api/products');
+        if (response.ok) {
+          const productsData = await response.json();
+          setProducts(productsData);
+        } else {
+          console.error('Failed to fetch products:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []); // The empty dependency array ensures the effect runs only once
+
   return (
     <div>
       <h3>Product Listings</h3>
@@ -11,10 +29,10 @@ const ProductList = ({ products, onUpdate, onRemove }) => {
         {products.map((product) => (
           <li key={product.id}>
             <strong>{product.name}</strong> - {product.description}
-            <button onClick={() => onUpdate(product.id, { ...product, name: 'Updated Name' })}>
+            {/* <button onClick={() => onUpdate(product.id, { ...product, name: 'Updated Name' })}>
               Update
             </button>
-            <button onClick={() => onRemove(product.id)}>Remove</button>
+            <button onClick={() => onRemove(product.id)}>Remove</button> */}
           </li>
         ))}
       </ul>
@@ -23,6 +41,7 @@ const ProductList = ({ products, onUpdate, onRemove }) => {
 };
 
 export default ProductList;
+
 
 // import React from 'react';
 
