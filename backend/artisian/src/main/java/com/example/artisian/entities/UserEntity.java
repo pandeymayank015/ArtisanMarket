@@ -27,6 +27,10 @@ public class UserEntity {
     @JoinColumn(name = "role_id")
     private RoleEntity role;
 
+    public UserEntity(String username) {
+        this.username = username;
+    }
+
     public UserEntity(String username, String email, String password, RoleEntity role, byte[] image) {
         this.username = username;
         this.email = email;
