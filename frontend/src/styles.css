@@ -1,0 +1,217 @@
+.page-container {
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+}
+
+.artisans-grid {
+    margin: auto;
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    width: 80%;
+}
+
+.artisan-card {
+    text-align: center;
+    width: 100%;
+}
+
+.profile-picture {
+    max-width: 100%;
+    height: auto;
+    border-radius: 20%;
+    margin-bottom: 10px;
+}
+
+.artisan-name {
+    margin-bottom: 0px; 
+}
+
+.artisan-profession {
+    margin-bottom: 0; 
+}
+
+.artisan-info {
+    width: 90%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .profile-pic {
+    max-width: 150px;
+    height: auto;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+  
+  .name-profession {
+    flex-grow: 1;
+    text-align: left;
+  }
+
+  .media-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 columns */
+    gap: 20px;
+  }
+  
+  .media-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .media-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+
+  .profile-section{
+    width: 90%;
+    margin: auto;
+  }
+
+.blogs-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+}
+
+.blog-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .blog-thumbnail {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .blog-details {
+    text-align: center;
+  }
+  
+  .blog-title {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+    color: #333;
+  }
+
+  .blog-published {
+    font-style: italic;
+    color: #888;
+    margin-bottom: 0;
+  }
+
+  .upload-button-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .upload-button {
+    background-color: #4caf50; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+
+.upload-form-container {
+max-width: 400px;
+margin: auto;
+padding: 20px;
+border: 1px solid #ccc;
+border-radius: 8px;
+margin-top: 50px;
+}
+
+.upload-form-container h2 {
+text-align: center;
+margin-bottom: 20px;
+}
+
+.upload-type-container {
+display: flex;
+justify-content: space-around;
+margin-bottom: 20px;
+}
+
+.form-fields label {
+display: block;
+margin-bottom: 10px;
+}
+
+.form-fields input,
+.form-fields textarea {
+width: 100%;
+padding: 8px;
+margin-top: 5px;
+box-sizing: border-box;
+}
+
+button {
+background-color: #4caf50;
+color: white;
+padding: 10px;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+}
+
+button:hover {
+background-color: #45a049;
+}
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+  }
+  nav {
+    background-color: #333;
+    color: white;
+    padding: 15px 0;
+  }
+  ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  li {
+    margin: 0 15px;
+  }
+  
+  a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+  }  
+
+  h1 {
+    text-align: center;
+    color: #333;
+    margin-top: 20px;
+  }

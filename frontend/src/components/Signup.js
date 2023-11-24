@@ -1,7 +1,8 @@
-// src/Signup.js
+// src/components/Signup.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import { url } from '../utils/ApiUrls'
+import { url } from '../utils/ApiUrls';
+import '../styles.css'; // Import your existing styles
 
 const Signup = () => {
   const [username, setUsername] = useState('');
@@ -21,10 +22,10 @@ const Signup = () => {
 
       console.log(formData);
       const response = await axios.post(url +'/auth/register', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
       console.log(response.data);
     } catch (error) {
@@ -38,37 +39,49 @@ const Signup = () => {
   };
 
   return (
-    <div>
-      <h2>Signup</h2>
-      <form>
-        <label>Username:</label>
-        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-        <br />
+    <div className="page-container">
+      <div className="upload-form-container">
+        <h2>Signup</h2>
+        <form>
+          <div className="form-fields">
+            <label>Username:</label>
+            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+          </div>
+          <br />
 
-        <label>Email:</label>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <br />
+          <div className="form-fields">
+            <label>Email:</label>
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          </div>
+          <br />
 
-        <label>Password:</label>
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <br />
+          <div className="form-fields">
+            <label>Password:</label>
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          </div>
+          <br />
 
-        <label>Role:</label>
-        <select value={role} onChange={(e) => setRole(e.target.value)}>
-          <option value="user">User</option>
-          <option value="admin">Admin</option>
-          <option value="artisan">Artisan</option>
-        </select>
-        <br />
+          <div className="form-fields">
+            <label>Role:</label>
+            <select value={role} onChange={(e) => setRole(e.target.value)}>
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+              <option value="artisan">Artisan</option>
+            </select>
+          </div>
+          <br />
 
-        <label>Image:</label>
-        <input type="file" accept="image/*" onChange={handleImageChange} />
-        <br />
+          <div className="form-fields">
+            <label>Image:</label>
+            <input type="file" accept="image/*" onChange={handleImageChange} />
+          </div>
+          <br />
 
-        <button type="button" onClick={handleSignup}>
-          Signup
-        </button>
-      </form>
+          <button type="button" className="upload-button" onClick={handleSignup}>
+            Signup
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
