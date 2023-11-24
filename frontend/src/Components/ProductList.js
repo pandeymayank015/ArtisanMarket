@@ -1,6 +1,7 @@
 // ProductList.js
 
 import React from 'react';
+import { url } from '../utils/ApiUrls'
 
 const ProductList = ({ products, onUpdate, onRemove }) => {
   return (
