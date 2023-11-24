@@ -21,15 +21,19 @@ public class AdminApproval {
     @Column(nullable = false) // Change to allow null values
     private String category;
 
+    @Column(nullable = false)
+    private int rating;
+
     @OneToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
-    public AdminApproval(String name, String description, double price, String category) {
+    public AdminApproval(String name, String description, double price, String category, int rating) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.category = category;
+        this.rating = rating;
     }
 
     public AdminApproval() {
@@ -76,4 +80,14 @@ public class AdminApproval {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+
 }

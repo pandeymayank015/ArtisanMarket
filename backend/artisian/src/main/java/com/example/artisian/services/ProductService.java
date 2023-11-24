@@ -37,7 +37,9 @@ public class ProductService {
     public Product updateProduct(Product updatedProduct) {
         return productRepository.save(updatedProduct);
     }
-
+    public List<Product> getAllProductsByOrder() {
+        return productRepository.findAllByOrderByRatingDesc();
+    }
     // Other methods for modifying products
 }
 

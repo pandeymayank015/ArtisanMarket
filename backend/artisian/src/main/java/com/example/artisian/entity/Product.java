@@ -24,15 +24,19 @@ public class Product {
     @Column(nullable = false) // Change to allow null values
     private String category;
 
+    @Column(nullable = false)
+    private int rating;
+
     public Product() {
         // Default constructor
     }
 
-    public Product(String name, String description, double price, String category) {
+    public Product(String name, String description, double price, String category, int rating) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.category = category;
+        this.rating = rating;
     }
 
     // Getters and setters for id, name, description, price
@@ -75,5 +79,13 @@ public class Product {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 }

@@ -72,7 +72,7 @@ public class ProductController {
         AdminApproval adminApproval = adminApprovalService.getAdminApprovalByProductId(productId);
 
         if (adminApproval != null) {
-            Product productToAdd = new Product(adminApproval.getName(), adminApproval.getDescription(), adminApproval.getPrice(), adminApproval.getCategory());
+            Product productToAdd = new Product(adminApproval.getName(), adminApproval.getDescription(), adminApproval.getPrice(), adminApproval.getCategory(), adminApproval.getRating());
 
             productService.addProduct(productToAdd); // Add the product to the Product table
             adminApprovalService.deleteAdminApproval(adminApproval); // Delete from AdminApproval table
@@ -81,6 +81,12 @@ public class ProductController {
         } else {
             return new ResponseEntity<>("Admin approval not found for the given product ID", HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/byOrder")
+    public ResponseEntity<List<Product>> getAllEntitiesInOrder() {
+        List<Product> products = productService.getAllProductsByOrder();
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     // Other methods for editing, deleting products
