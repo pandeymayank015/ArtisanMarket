@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/products")
 public class ProductController {
     private final ProductService productService;
@@ -35,12 +36,16 @@ public class ProductController {
         return new ResponseEntity<>(addedProduct, HttpStatus.CREATED);
     }
 
+
     @DeleteMapping("delete/{productId}")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<String> deleteProduct(@PathVariable Long productId) {
         productService.deleteProductById(productId);
         return new ResponseEntity<>("Product with ID " + productId + " has been deleted", HttpStatus.OK);
     }
+
     @PutMapping("update/{productId}")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<String> updateProduct(@PathVariable Long productId, @RequestBody Product updatedProduct) {
         Optional<Product> product = productService.getProductById(productId);
         if (product.isPresent()) {
@@ -53,6 +58,7 @@ public class ProductController {
     }
 
     @PostMapping("/user-add")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<String> addUserProduct(@RequestBody AdminApproval product) {
 //        Product addedProduct = productService.addProduct(product);
         adminApprovalService.addProduct(product); // Send for admin approval
@@ -60,6 +66,8 @@ public class ProductController {
     }
 
     @PutMapping("/approve/{productId}")
+    @CrossOrigin(origins = "*")
+
     public ResponseEntity<String> approveProduct(@PathVariable Long productId) {
         AdminApproval adminApproval = adminApprovalService.getAdminApprovalByProductId(productId);
 
