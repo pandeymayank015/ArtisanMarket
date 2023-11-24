@@ -1,78 +1,112 @@
-// ModifyProductForm.js
 import React, { useState } from 'react';
+import { url } from '../utils/ApiUrls';
 
-const ModifyProductForm = ({ products, onUpdate }) => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [newProductDetails, setNewProductDetails] = useState({
-    name: '',
-    description: '',
-  });
+const ModifyProductForm = ({ onSubmit }) => {
+  const [productID, setProductID] = useState('');
+  const [productName, setProductName] = useState('');
+  const [productDescription, setProductDescription] = useState('');
+  const [productPrice, setProductPrice] = useState('');
+  const [productCategory, setProductCategory] = useState('');
 
-  const handleSearch = () => {
-    // Implement search logic here
-    const foundProduct = products.find((product) => product.name === searchTerm);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    if (foundProduct) {
-      setNewProductDetails({
-        name: foundProduct.name,
-        description: foundProduct.description,
+    // Create a product object with the entered values
+    const newProduct = {
+      id:productID,
+      name: productName,
+      description: productDescription,
+      price: productPrice,
+      category: productCategory,
+    };
+
+    try {
+      // Send a request to the backend API to add the product
+      const response = await fetch(`${url}/api/products/update/${productID}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newProduct),
       });
-    } else {
-      // Handle the case where the product is not found
-      alert('Product not found');
+
+      if (response.ok) {
+        // If the request is successful, notify the parent component
+        // onSubmit(productID);
+        // Clear the form
+        setProductID('');
+        setProductName('');
+        setProductDescription('');
+        setProductPrice('');
+        setProductCategory('');
+        alert("Modification Success!!")
+      } else {
+        // Handle the case where the request is not successful
+        alert('Error modifying product');
+      }
+    } catch (error) {
+      console.error('Error modifying product:', error);
+      alert('Error modifying product');
     }
   };
 
-  const handleUpdate = () => {
-    // Implement update logic here
-    // Use the onUpdate prop to pass the updated details to the parent component
-    onUpdate(newProductDetails);
-    // Clear the form
-    setNewProductDetails({ name: '', description: '' });
-  };
-
   return (
-    <div>
-      <h3>Search and Modify Product</h3>
+    // <form onSubmit={handleSubmit}>
+    <form>
       <label>
-        Search by Name:
+        ID:
         <input
-          type="text"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          type="number"
+          value={productID}
+          onChange={(e) => setProductID(e.target.value)}
         />
       </label>
-      <button onClick={handleSearch}>Search</button>
+      <label>
+        Product Name:
+        <input
+          type="text"
+          value={productName}
+          onChange={(e) => setProductName(e.target.value)}
+        />
+      </label>
 
-      {newProductDetails.name && (
-        <div>
-          <h4>Modify Product Details</h4>
-          <label>
-            New Name:
-            <input
-              type="text"
-              value={newProductDetails.name}
-              onChange={(e) =>
-                setNewProductDetails({ ...newProductDetails, name: e.target.value })
-              }
-            />
-          </label>
-          <label>
-            New Description:
-            <textarea
-              value={newProductDetails.description}
-              onChange={(e) =>
-                setNewProductDetails({
-                  ...newProductDetails,
-                  description: e.target.value,
-                })
-              }
-            />
-          </label>
-          <button onClick={handleUpdate}>Update Product</button>
-        </div>
-      )}
-    </div>
+      <br />
+
+      <label>
+        Product Description:
+        <textarea
+          value={productDescription}
+          onChange={(e) => setProductDescription(e.target.value)}
+        />
+      </label>
+
+      <br />
+
+      <label>
+        Price:
+        <input
+          type="number"
+          value={productPrice}
+          onChange={(e) => setProductPrice(e.target.value)}
+        />
+      </label>
+
+      <br />
+
+      <label>
+        Category:
+        <input
+          type="text"
+          value={productCategory}
+          onChange={(e) => setProductCategory(e.target.value)}
+        />
+      </label>
+
+      <br />
+
+      {/* <button type="submit">Modify Product</button> */}
+      <button onClick={handleSubmit}>Delete Product</button>
+    </form>
   );
 };
 

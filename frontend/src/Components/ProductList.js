@@ -28,7 +28,7 @@ const ProductList = ({ onUpdate, onRemove }) => {
       <ul>
         {products.map((product) => (
           <li key={product.id}>
-            <strong>{product.name}</strong> - {product.description}
+            {product.id}<strong>{product.name}</strong> - {product.description}
             {/* <button onClick={() => onUpdate(product.id, { ...product, name: 'Updated Name' })}>
               Update
             </button>
