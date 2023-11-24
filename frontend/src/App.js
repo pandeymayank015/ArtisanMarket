@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ArtisanStoreManagement from './components/ArtisanStoreManagement';
-import ProductApprovalForm from './components/ProductApprovalForm';
+import ArtisanStoreManagement from './components/3_Admin/ArtisanStoreManagement';
+import ProductApprovalForm from './components/3_Admin/ProductApprovalForm';
+import ProductDetail from './components/12_Rating_&_Review/ProductDetail';
 
 const App = () => {
   return (
@@ -10,6 +11,8 @@ const App = () => {
         <Routes>
           <Route path="/ArtisanStoreManagement" element={<ArtisanStoreManagement />} />
           <Route path="/ProductApprovalForm" element={<ProductApprovalForm />} />
+          <Route path="/ProductDetail" element={<ProductDetail />} />
+
         </Routes>
       </div>
     </Router>

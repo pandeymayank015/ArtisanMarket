@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { url } from '../utils/ApiUrls';
+import { url } from '../../utils/ApiUrls';
 
 const ProductList = ({ onUpdate, onRemove }) => {
   const [products, setProducts] = useState([]);

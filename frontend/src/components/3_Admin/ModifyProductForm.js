@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { url } from '../utils/ApiUrls';
+import { url } from '../../utils/ApiUrls';
 
 const ModifyProductForm = ({ onSubmit }) => {
   const [productID, setProductID] = useState('');
