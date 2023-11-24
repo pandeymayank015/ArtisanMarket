@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { url } from '../utils/ApiUrls';
-import '../styles.css'; // Import your existing styles
+import '../styles/styles.css'; // Import your existing styles
 
 const Signup = () => {
   const [username, setUsername] = useState('');
