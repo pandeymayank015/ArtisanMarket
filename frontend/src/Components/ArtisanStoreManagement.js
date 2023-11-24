@@ -32,6 +32,8 @@ const ArtisanStoreManagement = () => {
   };
 
   return (
+    <div className='dashboard'>
+      <h1>Admin dashboard </h1>
     <div className="container">
       <div className="box">
         <h2>Add Product</h2>
@@ -56,6 +58,8 @@ const ArtisanStoreManagement = () => {
         )}
       </div>
     </div>
+    </div>
+
   );
 };
 

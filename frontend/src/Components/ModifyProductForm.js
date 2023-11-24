@@ -105,7 +105,7 @@ const ModifyProductForm = ({ onSubmit }) => {
       <br />
 
       {/* <button type="submit">Modify Product</button> */}
-      <button onClick={handleSubmit}>Delete Product</button>
+      <button onClick={handleSubmit}>Modify Product</button>
     </form>
   );
 };
