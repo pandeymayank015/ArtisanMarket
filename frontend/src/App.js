@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ArtisanStoreManagement from './components/3_Admin/ArtisanStoreManagement';
 import ProductApprovalForm from './components/3_Admin/ProductApprovalForm';
 import ProductDetail from './components/12_Rating_&_Review/ProductDetail';
+import WishlistManager from './components/15_User_Wishlists/WishlistManager';
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
           <Route path="/ArtisanStoreManagement" element={<ArtisanStoreManagement />} />
           <Route path="/ProductApprovalForm" element={<ProductApprovalForm />} />
           <Route path="/ProductDetail" element={<ProductDetail />} />
+          <Route path="/WishlistManager" element={<WishlistManager />} />
 
         </Routes>
       </div>
