@@ -21,7 +21,7 @@ const Signup = () => {
       formData.append('image', image);
 
       console.log(formData);
-      const response = await axios.post(url +'/auth/register', formData, {
+      const response = await axios.post(url + '/auth/register', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -41,25 +41,21 @@ const Signup = () => {
   return (
     <div className="page-container">
       <div className="upload-form-container">
-        <h2>Signup</h2>
         <form>
           <div className="form-fields">
             <label>Username:</label>
             <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
           </div>
-          <br />
 
           <div className="form-fields">
             <label>Email:</label>
             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
           </div>
-          <br />
 
           <div className="form-fields">
             <label>Password:</label>
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
           </div>
-          <br />
 
           <div className="form-fields">
             <label>Role:</label>
@@ -69,13 +65,11 @@ const Signup = () => {
               <option value="artisan">Artisan</option>
             </select>
           </div>
-          <br />
 
           <div className="form-fields">
             <label>Image:</label>
             <input type="file" accept="image/*" onChange={handleImageChange} />
           </div>
-          <br />
 
           <button type="button" className="upload-button" onClick={handleSignup}>
             Signup
