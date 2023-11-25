@@ -14,7 +14,7 @@ import CommunityForum from './components/CommunityForum';
 function App() {
   return (
     <Router>
-      <>
+      <div className='app-container'>
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -25,7 +25,7 @@ function App() {
           <Route path="/community-forum" element={<CommunityForum />} />
         </Routes>
         <Footer />
-      </>
+      </div>
     </Router>
   );
 }
