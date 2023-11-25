@@ -17,7 +17,7 @@ import java.util.Optional;
 public class WishlistController {
     @Autowired
     private WishlistService wishlistService;
-
+//kova
     @PostMapping("/add")
     public ResponseEntity<String> addToWishlist(@RequestBody Wishlist wishlistItem) {
         wishlistService.addToWishlist(wishlistItem);
@@ -31,8 +31,10 @@ public class WishlistController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<List<Long>> getUserWishlist(@PathVariable String userId) {
-        List<Long> wishlist = wishlistService.getUserWishlist(userId);
+    public ResponseEntity<List<Wishlist>> getUserWishlist(@PathVariable String userId) {
+        List<Wishlist> wishlist = wishlistService.getWishlistByUserId(userId);
         return ResponseEntity.ok(wishlist);
     }
+
+
 }

@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 import javax.persistence.*;
 import javax.persistence.*;
-
+//kova
 @Entity
 @Table(name = "products")
 public class Product {

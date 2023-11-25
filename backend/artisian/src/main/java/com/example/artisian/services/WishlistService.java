@@ -24,9 +24,8 @@ public class WishlistService {
             wishlistRepository.delete(wishlistItem);
         }
     }
-
-    public List<Long> getUserWishlist(String userId) {
-        List<Wishlist> wishlistItems = wishlistRepository.findByUserId(userId);
-        return wishlistItems.stream().map(Wishlist::getProductId).collect(Collectors.toList());
+    public List<Wishlist> getWishlistByUserId(String userId) {
+        return wishlistRepository.findByUserId(userId);
     }
+
 }
