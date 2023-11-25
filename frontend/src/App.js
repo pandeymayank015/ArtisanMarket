@@ -10,6 +10,7 @@ import Home from './components/Home';
 import UserProfile from './components/UserProfile';
 import ArtisanProfile from './components/ArtisanProfile';
 import CommunityForum from './components/CommunityForum';
+import ResourceCenter from './components/resource-center/resource-center';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/user-profile" element={<UserProfile />} />
           <Route path="/artisan-profile" element={<ArtisanProfile />} />
           <Route path="/community-forum" element={<CommunityForum />} />
+          <Route path="/resource-center" element={<ResourceCenter />} />
         </Routes>
         <Footer />
       </div>

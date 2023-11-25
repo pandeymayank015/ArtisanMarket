@@ -32,7 +32,7 @@ const CommunityForum = () => {
   };
 
   return (
-    <div className="page-container">
+    <div className="page-container view-container">
       <div className="community-forum-container">
         <h2>Community Forum</h2>
 

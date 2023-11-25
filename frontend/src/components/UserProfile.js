@@ -16,7 +16,7 @@ const UserProfile = () => {
   };
 
   return (
-    <div>
+    <div className='view-container'>
       <h2>User Profile</h2>
       <div className="profile-picture-container">
         <img src={"/* Add source of the profile picture here */"} alt="Profile" className="profile-picture" />

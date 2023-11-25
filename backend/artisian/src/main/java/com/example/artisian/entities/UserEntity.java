@@ -3,6 +3,8 @@ package com.example.artisian.entities;
 import lombok.*;
 import org.hibernate.annotations.Type;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Data
@@ -24,6 +26,7 @@ public class UserEntity {
     private byte[] image;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     @JoinColumn(name = "role_id")
     private RoleEntity role;
 
