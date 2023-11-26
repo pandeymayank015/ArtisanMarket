@@ -45,7 +45,7 @@ const ResourceCenter = () => {
             <h2 className='p-3'>Artisan's Workshop</h2>
             <div className="artisans-grid">
                 {artisans.map((artisan) => (
-                    <Link key={artisan.id} to={`/artisan/${artisan.id}`} className="artisan-link">
+                    <Link key={artisan.username} to={`/artisan/${artisan.username}`} className="artisan-link">
                         <div className="artisan-card p-4">
                             <img src={'data:image/png;base64,' + artisan.base64Image} alt="Common Profile" className="profile-picture" />
                             <h3 className='artisan-name'>{artisan.username}</h3>
@@ -54,6 +54,7 @@ const ResourceCenter = () => {
                     </Link>
                 ))}
             </div>
+            <Link className="position-fixed mx-4 upload-button" to={`/upload/mayankmadan`} >Upload</Link>
         </div>
     )
 };

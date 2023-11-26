@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.zip.DataFormatException;
 
@@ -30,27 +31,52 @@ public class UserService {
                             && user.getRole() != null
                             && user.getRole().getName().equals(ERole.ROLE_ARTISAN))
                     .map(user -> {
-                        UserDTO userDTO = new UserDTO();
-                        userDTO.setUsername(user.getUsername());
-                        userDTO.setEmail(user.getEmail());
-                        if (user.getImage() != null) {
-                            String base64Image;
-                            try {
-                                base64Image = Base64.getEncoder()
-                                        .encodeToString(ImageUtils.decompressImage(user.getImage()));
-                                userDTO.setBase64Image(base64Image);
-                            } catch (DataFormatException | IOException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
-                        }
-                        if (user.getRole() != null) {
-                            userDTO.setRoleName(user.getRole().getName().name());
-                        }
+                        UserDTO userDTO = convertEntityToDTO(user);
                         return userDTO;
                     })
                     .collect(Collectors.toList());
         }
         return new ArrayList<>();
+    }
+
+    private UserDTO convertEntityToDTO(UserEntity user) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername(user.getUsername());
+        userDTO.setEmail(user.getEmail());
+        if (user.getImage() != null) {
+            String base64Image;
+            try {
+                base64Image = Base64.getEncoder()
+                        .encodeToString(ImageUtils.decompressImage(user.getImage()));
+                userDTO.setBase64Image(base64Image);
+            } catch (DataFormatException | IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        if (user.getRole() != null) {
+            userDTO.setRoleName(user.getRole().getName().name());
+        }
+        return userDTO;
+    }
+
+    public UserDTO getUser(String username) {
+        if (username != null) {
+            Optional<UserEntity> userEntity = userRepository.findByUsername(username);
+            if (userEntity.isPresent()) {
+                return convertEntityToDTO(userEntity.get());
+            }
+        }
+        return null;
+    }
+
+    public UserEntity getUserEntity(String username) {
+        if (username != null) {
+            Optional<UserEntity> userEntity = userRepository.findByUsername(username);
+            if (userEntity.isPresent()) {
+                return userEntity.get();
+            }
+        }
+        return null;
     }
 }

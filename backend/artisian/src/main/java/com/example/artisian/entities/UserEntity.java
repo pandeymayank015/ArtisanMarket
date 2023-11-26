@@ -37,4 +37,8 @@ public class UserEntity {
         this.role = role;
         this.image = image;
     }
+
+    public UserEntity(String username) {
+        this.username = username;
+    }
 }
