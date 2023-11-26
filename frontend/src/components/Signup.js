@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { url } from '../utils/ApiUrls';
+import { useNavigate } from "react-router-dom";
 import '../styles/styles.css'; // Import your existing styles
 
 const Signup = () => {
@@ -10,6 +11,7 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
   const [image, setImage] = useState(null);
+  const navigate = useNavigate();
 
   const handleSignup = async () => {
     try {
@@ -26,8 +28,8 @@ const Signup = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-
       console.log(response.data);
+      navigate("/login");
     } catch (error) {
       console.error('Error during signup:', error);
     }

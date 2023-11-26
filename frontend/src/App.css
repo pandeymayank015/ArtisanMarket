@@ -7,3 +7,9 @@
     background-size: cover;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+.view-container {
+    background-color: white;
+    height: calc(100vh - 7.2em);
+    overflow-y: scroll;
+}
