@@ -1,15 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ArtisanStoreManagement from './components/3_Admin/ArtisanStoreManagement';
-import ProductApprovalForm from './components/3_Admin/ProductApprovalForm';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import UpdateProductRatingForm from './components/12_Rating_&_Review/UpdateProductRatingForm';
 import Wishlist from './components/15_User_Wishlists/Wishlist';
+import ArtisanStoreManagement from './components/3_Admin/ArtisanStoreManagement';
+import ProductApprovalForm from './components/3_Admin/ProductApprovalForm';
 // src/App.js
-import React from 'react';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+// import React from 'react';
 import './App.css';
 import ArtisanProfile from './components/ArtisanProfile';
-import ArtisanWorkshopProfile from './components/artisan-workshop-profile/ArtisanWorkshopProfile';
 import CommunityForum from './components/CommunityForum';
 import Footer from './components/Footer';
 import Home from './components/Home';
@@ -17,8 +15,9 @@ import Login from './components/Login';
 import Navbar from './components/Navbar';
 import Signup from './components/Signup';
 import UserProfile from './components/UserProfile';
-import ResourceCenter from './components/resource-center/resource-center';
+import ArtisanWorkshopProfile from './components/artisan-workshop-profile/ArtisanWorkshopProfile';
 import UploadForm from './components/resource-center/UploadForm';
+import ResourceCenter from './components/resource-center/resource-center';
 
 const App = () => {
   return (

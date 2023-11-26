@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import '../../styles/ArtisanStoreManagement.css';
+// import '../../styles/ArtisanStoreManagement.css';
 import ProductList from './ProductList';
 import ProductForm from './ProductForm';
 import ModifyProductForm from './ModifyProductForm';
@@ -32,6 +32,7 @@ const ArtisanStoreManagement = () => {
   };
 
   return (
+    <div className='view-container'>
     <div className='dashboard'>
       <h1>Admin dashboard </h1>
     <div className="container">
@@ -57,6 +58,7 @@ const ArtisanStoreManagement = () => {
           <ProductList products={products} onUpdate={updateProduct} onRemove={removeProduct} />
         )}
       </div>
+    </div>
     </div>
     </div>
 
