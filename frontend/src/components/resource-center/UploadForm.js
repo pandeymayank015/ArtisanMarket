@@ -4,13 +4,18 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './../resource-center/resource-center.css';
 import { url } from '../../utils/ApiUrls';
+import ToastPopUp from '../toast_popup/ToastPopUp';
 
 const UploadForm = () => {
     const [uploadType, setUploadType] = useState('media'); // Default upload type is 'media'
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [thumbnail, setThumbnail] = useState('');
+    const [conditionMet, setConditionMet] = useState(false);
 
+    const handleShowToast = () => {
+        setConditionMet(true);
+    };
     const handleUploadTypeChange = (type) => {
         setUploadType(type);
     };
@@ -19,6 +24,7 @@ const UploadForm = () => {
         const selectedImage = e.target.files[0];
         setThumbnail(selectedImage);
     };
+
 
     const { username } = useParams();
     const handleFormSubmit = async (e) => {
@@ -44,7 +50,7 @@ const UploadForm = () => {
         } catch (error) {
             console.error('Error during uploading resource:', error);
         }
-
+        handleShowToast();
         // Reset form fields after submission
         setTitle('');
         setDescription('');
@@ -103,6 +109,7 @@ const UploadForm = () => {
                     <button type="submit">Upload</button>
                 </form>
             </div>
+            <ToastPopUp show={conditionMet} />
         </div>
     );
 };
