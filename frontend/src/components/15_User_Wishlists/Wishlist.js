@@ -90,7 +90,7 @@ const Wishlist = () => {
   
 
   return (
-    <div>
+    <div className='view-container'>        
       <h2>Wishlist</h2>
       <label>
         User ID:

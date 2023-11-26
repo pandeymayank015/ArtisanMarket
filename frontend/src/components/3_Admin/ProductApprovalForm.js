@@ -64,7 +64,7 @@ const ProductApprovalForm = () => {
   };
 
   return (
-    <div>
+    <div className='view-container'>
       <h2>Product Approval</h2>
       <div>
         <h3>Add Product for Approval</h3>
