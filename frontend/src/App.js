@@ -12,6 +12,8 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Navbar from './components/Navbar';
 import Signup from './components/Signup';
+import Events from './components/events/Events';
+import EventCreation from './components/events/EventCreation';
 import UserProfile from './components/UserProfile';
 import ArtisanWorkshopProfile from './components/artisan-workshop-profile/ArtisanWorkshopProfile';
 import BlogDetails from './components/artisan-workshop-profile/BlogDetails';
@@ -23,6 +25,10 @@ const App = () => {
       <div className='app-container'>
         <Navbar />
         <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/event-creation" element={<EventCreation />} />
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
