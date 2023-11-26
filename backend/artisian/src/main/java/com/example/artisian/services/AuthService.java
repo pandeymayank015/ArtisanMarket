@@ -78,7 +78,7 @@ public class AuthService {
             return ResponseEntity.badRequest().body(new MessageResponseDTO("Error: Email is already in use!"));
         }
 
-        var compressImage =  ImageUtils.compressImage(registerDTO.getImage().getBytes());
+        var compressImage = ImageUtils.compressImage(registerDTO.getImage().getBytes());
 
         String strRole = registerDTO.getRole();
         RoleEntity userRole;

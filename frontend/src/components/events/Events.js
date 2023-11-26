@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Modal from 'react-modal'; // Import the Modal component
-import { url } from '../utils/ApiUrls';
+import { url } from '../../utils/ApiUrls';
 
 const Events = () => {
   const [events, setEvents] = useState([]);
@@ -121,52 +121,60 @@ const Events = () => {
   };
 
   return (
-    <div>
-      <h2>Events Page</h2>
-      <p>
-        <Link to="/event-creation">
-          <button>Create an Event</button>
-        </Link>
-      </p>
-
+    <div className='view-container p-4'>
+    <div className="events-container">
       <div>
-        <h3>All Events</h3>
-        <ul>
-          {events.map((event) => (
-            <li key={event.id}>
-              <strong>{event.eventName}</strong>
-              <p>Date: {event.eventDate}</p>
-              <p>Time: {event.eventTime}</p>
-              <p>Venue: {event.eventVenue}</p>
-              <p>Description: {event.eventDescription}</p>
-              {registeredEvents.some((registeredEvent) => registeredEvent.id === event.id) && (
-                <span style={{ color: 'green', marginLeft: '10px' }}>Registered</span>
-              )}
-              {registeredEvents.some((registeredEvent) => registeredEvent.id === event.id) ? (
-                <button onClick={() => handleInvite(event.id)}>Invite</button>
-              ) : (
-                <button onClick={() => handleRegister(event.id)}>Register</button>
-              )}
-            </li>
-          ))}
-        </ul>
-      </div>
+        <h2 style={{ textAlign: 'center' }}>Events</h2>
+        <p style={{ textAlign: 'center' }}>
+          <Link to="/event-creation">
+            <button style={{ marginLeft: '20px', marginTop: '20px', width: '170px' }}>Create an Event</button>
+          </Link>
+        </p>
 
-      {/* Invite Modal */}
-      <Modal
-        isOpen={isInviteModalOpen}
-        onRequestClose={() => setInviteModalOpen(false)}
-        contentLabel="Invite Modal"
-      >
-        <p>Enter email address to invite:</p>
-        <input
-          type="email"
-          value={inviteEmail}
-          onChange={(e) => setInviteEmail(e.target.value)}
-        />
-        <button onClick={handleInviteSubmit}>Send Invite</button>
-        <button onClick={() => setInviteModalOpen(false)}>Cancel</button>
-      </Modal>
+        <div>
+          <h3 style={{ marginLeft: '70px', marginBottom: '30px' }}>All Events :</h3>
+          <ul>
+            {events.map((event) => (
+              <li key={event.id} style={{ border: '1px solid black', padding: '15px', marginBottom: '20px' }}>
+                <strong style={{ fontSize: '18px' }}>{event.eventName}</strong>
+                <br />
+                <p style={{ marginTop: '15px' }}>Date: {event.eventDate}</p>
+                <p>Time: {event.eventTime}</p>
+                <p>Venue: {event.eventVenue}</p>
+                <p>Description: {event.eventDescription}</p>
+                {registeredEvents.some((registeredEvent) => registeredEvent.id === event.id) && (
+                    <span style={{ backgroundColor: 'white', color: 'green', fontWeight: 'bold', padding: '11px 5px' }}>
+                    Registered
+                  </span>
+                )}
+                {registeredEvents.some((registeredEvent) => registeredEvent.id === event.id) ? (
+                  <button style={{ marginLeft: '10px' }} onClick={() => handleInvite(event.id)}>Invite</button>
+                ) : (
+                  <button style={{ width: '100px' }} onClick={() => handleRegister(event.id)}>Register</button>
+                )}
+              </li>
+            ))}
+          </ul>
+
+        </div>
+
+        {/* Invite Modal */}
+        <Modal
+          isOpen={isInviteModalOpen}
+          onRequestClose={() => setInviteModalOpen(false)}
+          contentLabel="Invite Modal"
+        >
+          <p>Enter email address to invite:</p>
+          <input
+            type="email"
+            value={inviteEmail}
+            onChange={(e) => setInviteEmail(e.target.value)}
+          />
+          <button onClick={handleInviteSubmit}>Send Invite</button>
+          <button onClick={() => setInviteModalOpen(false)}>Cancel</button>
+        </Modal>
+      </div>
+    </div>
     </div>
   );
 };

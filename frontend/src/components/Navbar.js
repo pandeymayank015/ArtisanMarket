@@ -1,7 +1,7 @@
 // src/components/Navbar.js
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import '../styles/styles.css';
 function Navbar() {
   return (
     <nav>
@@ -14,6 +14,9 @@ function Navbar() {
         </li>
         <li>
           <Link to="/signup">Signup</Link>
+        </li>
+        <li>
+          <Link to="/events">Events</Link>
         </li>
       </ul>
     </nav>
