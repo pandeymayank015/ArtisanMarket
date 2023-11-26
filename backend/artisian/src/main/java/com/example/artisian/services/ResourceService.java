@@ -31,7 +31,7 @@ public class ResourceService {
     public Map<ContentType, List<ResourceDTO>> getAllResourceForUser(String userName) {
         Map<ContentType, List<ResourceDTO>> resourcesByType = null;
         if (userName != null) {
-            resourcesByType = repo.findAll().stream()
+            resourcesByType = repo.findAll().parallelStream()
                     .map(this::convertToDTO)
                     .collect(Collectors.groupingBy(ResourceDTO::getType));
         }
@@ -57,15 +57,18 @@ public class ResourceService {
             resourceDTO.setPublishedAt(savedResource.getPublishedAt());
             try {
                 resourceDTO.setBase64Thumbnail(
-                        Base64.getEncoder().encodeToString(ImageUtils.decompressImage(savedResource.getThumbnail())));
+                        decompressAndEncodeImage(savedResource.getThumbnail()));
             } catch (DataFormatException | IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                System.out.println(e.getStackTrace().toString());
             }
             resourceDTO.setContent(savedResource.getContent());
             resourceDTO.setType(savedResource.getType());
         }
         return resourceDTO;
+    }
+
+    private String decompressAndEncodeImage(byte[] savedResource) throws DataFormatException, IOException {
+        return Base64.getEncoder().encodeToString(ImageUtils.decompressImage(savedResource));
     }
 
     private ResourceEntity convertToEntity(String username, ResourceDTO resource) {
