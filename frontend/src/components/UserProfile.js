@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import '../styles/profile.css';
 
 const UserProfile = () => {
+  const [profileVisible, setProfileVisible] = useState(true);
+
   const [userInfo, setUserInfo] = useState({
     username: 'JohnDoe',
     email: 'john@example.com',
@@ -17,12 +19,11 @@ const UserProfile = () => {
 
   return (
     <div className='view-container'>
-      <h2>User Profile</h2>
+      <div className="profile-container">
       <div className="profile-picture-container">
         <img src={"/* Add source of the profile picture here */"} alt="Profile" className="profile-picture" />
         <input type="file" className="profile-picture-input" accept="image/*" onChange={"* Add onChange handler for updating the photo */"} />
       </div>
-      <div className="upload-form-container">
       <form>
         <div className="form-fields">
           <label>Username:</label>
@@ -69,7 +70,10 @@ const UserProfile = () => {
         </button>
       </form>
       </div>
-    </div>
+      <button type="button" className="toggle-button" onClick={() => setProfileVisible(!profileVisible)}>
+        {profileVisible ? 'Hide Profile' : 'Show Profile'}
+      </button>
+      </div>
   );
 };
 

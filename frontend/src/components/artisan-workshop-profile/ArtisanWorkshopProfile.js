@@ -96,12 +96,6 @@ const ArtisanWorkshopProfile = () => {
                     ))}
                 </div>
             </div>
-
-            <div className="upload-button-container">
-                <button onClick={() => handleUploadClick()} className="upload-button">
-                    Upload
-                </button>
-            </div>
         </div>
     );
 };
