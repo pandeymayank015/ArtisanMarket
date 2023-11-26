@@ -22,6 +22,7 @@ const UserProfile = () => {
         <img src={"/* Add source of the profile picture here */"} alt="Profile" className="profile-picture" />
         <input type="file" className="profile-picture-input" accept="image/*" onChange={"* Add onChange handler for updating the photo */"} />
       </div>
+      <div className="upload-form-container">
       <form>
         <div className="form-fields">
           <label>Username:</label>
@@ -67,6 +68,7 @@ const UserProfile = () => {
           Update Profile
         </button>
       </form>
+      </div>
     </div>
   );
 };
