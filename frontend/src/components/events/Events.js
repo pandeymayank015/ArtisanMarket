@@ -11,6 +11,18 @@ const Events = () => {
   const [inviteEmail, setInviteEmail] = useState('');
   const [selectedEventId, setSelectedEventId] = useState(null); // New state variable
 
+  // Invite Modal
+  const modalStyles = {
+    content: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      width: '60%',
+      height: '50%',
+      margin: 'auto', 
+    },
+  };
+
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -159,19 +171,35 @@ const Events = () => {
         </div>
 
         {/* Invite Modal */}
-        <Modal
+       {/* Invite Modal */}
+       <Modal
           isOpen={isInviteModalOpen}
           onRequestClose={() => setInviteModalOpen(false)}
           contentLabel="Invite Modal"
+          style={modalStyles} // Apply the custom styles
         >
-          <p>Enter email address to invite:</p>
+          <button
+              onClick={() => setInviteModalOpen(false)}
+              style={{ alignSelf: 'flex-end', padding: '8px', cursor: 'pointer', fontSize: '16px', height: '35px' }}
+            >
+              X
+            </button>
+          <p style={{ marginTop: '10px', fontWeight: 'bold' }}>Enter email address to invite:</p>
           <input
             type="email"
             value={inviteEmail}
             onChange={(e) => setInviteEmail(e.target.value)}
+            style={{ marginBottom: '30px', padding: '8px', width: '30%' }} // Add spacing
           />
-          <button onClick={handleInviteSubmit}>Send Invite</button>
-          <button onClick={() => setInviteModalOpen(false)}>Cancel</button>
+          <div style={{ display: 'flex', justifyContent: 'space-between', width: '40%' }}>
+            <button
+              onClick={handleInviteSubmit}
+              style={{ padding: '8px', width: '40%' }} // Add spacing
+            >
+              Send Invite
+            </button>
+            <button onClick={() => setInviteModalOpen(false)} style={{ padding: '8px', width: '30%' }}>Cancel</button>
+          </div>
         </Modal>
       </div>
     </div>
