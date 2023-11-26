@@ -9,10 +9,12 @@ import java.util.stream.Collectors;
 import java.util.zip.DataFormatException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.example.artisian.dto.UserDTO;
 import com.example.artisian.entities.ERole;
+import com.example.artisian.entities.RoleEntity;
 import com.example.artisian.entities.UserEntity;
 import com.example.artisian.repositories.UserRepository;
 import com.example.artisian.utils.ImageUtils;
@@ -60,6 +62,34 @@ public class UserService {
         return userDTO;
     }
 
+
+
+    private UserEntity convertDTOToEntity(UserDTO userDTO) {
+    UserEntity userEntity = new UserEntity();
+    userEntity.setUsername(userDTO.getUsername());
+    userEntity.setEmail(userDTO.getEmail());
+    if (userDTO.getBase64Image() != null) {
+        byte[] compressedImage;
+        try {
+            compressedImage = ImageUtils.compressImage(Base64.getDecoder().decode(userDTO.getBase64Image()));
+            userEntity.setImage(compressedImage);
+        } catch (IOException e) {
+            // Handle exception as needed
+            e.printStackTrace();
+        }
+    }
+    if (userDTO.getRoleName() != null) {
+        // Assuming UserEntity has a reference to RoleEntity
+        RoleEntity roleEntity = new RoleEntity();
+        roleEntity.setName(ERole.valueOf(userDTO.getRoleName()));
+        userEntity.setRole(roleEntity);
+    }
+    return userEntity;
+}
+
+
+
+
     public UserDTO getUser(String username) {
         if (username != null) {
             Optional<UserEntity> userEntity = userRepository.findByUsername(username);
@@ -79,4 +109,48 @@ public class UserService {
         }
         return null;
     }
+
+
+    public UserDTO updateProfile(UserDTO user) {
+
+        Optional<UserEntity> userEntity = userRepository.findByUsername(user.getUsername());
+        UserEntity existingProfile=null;
+
+        if (userEntity.isPresent()) {
+            existingProfile = userEntity.get();
+        } else {
+            System.out.println("Profile not found with id: " + user.getUsername());
+        }
+
+        if (user.getEmail() != null) {
+            existingProfile.setEmail(user.getEmail());
+        }
+        if (user.getAddress() != null) {
+            existingProfile.setAddress(user.getAddress());
+        }
+        if (user.getContact() != null) {
+            existingProfile.setContact(user.getContact());
+        }
+        if (user.getProfession() != null) {
+            existingProfile.setProfession(user.getProfession());
+        }
+        if (user.getProfileVisibility() != existingProfile.isProfileVisibility()) {
+            existingProfile.setProfileVisibility(user.getProfileVisibility());
+        }
+        // Update profile image if needed
+        if (user.getBase64Image() != null) {             
+                byte[] compressedImage;
+                 try {
+                        compressedImage = ImageUtils.compressImage(Base64.getDecoder().decode(user.getBase64Image()));
+                         existingProfile.setImage(compressedImage);
+        } catch (IOException e) {
+            // Handle exception as needed
+            e.printStackTrace();
+        }
+    
+        }
+       // Save the updated profile to the repository
+        return convertEntityToDTO( userRepository.save(existingProfile));
+    }
+
 }

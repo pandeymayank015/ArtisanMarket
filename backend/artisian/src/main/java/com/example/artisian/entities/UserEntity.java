@@ -21,6 +21,14 @@ public class UserEntity {
     private String username;
     private String email;
     private String password;
+    @Column(name = "profession")
+    private String profession;    
+    @Column(name = "address")
+    private String address;
+    @Column(name = "contact_information")
+    private String contact;
+    @Column(name = "profile_visibility")
+    private boolean ProfileVisibility;
     @Lob
     @Type(type = "org.hibernate.type.ImageType")
     private byte[] image;
@@ -41,4 +49,6 @@ public class UserEntity {
     public UserEntity(String username) {
         this.username = username;
     }
+
+    
 }
