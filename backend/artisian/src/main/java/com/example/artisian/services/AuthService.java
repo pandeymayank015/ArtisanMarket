@@ -108,7 +108,7 @@ public class AuthService {
                 registerDTO.getEmail(),
                 encoder.encode(registerDTO.getPassword()),
                 userRole, compressImage);
-
+        user.setProfileVisibility(true);
         userRepository.save(user);
         return ResponseEntity.ok(new MessageResponseDTO("User registered successfully!"));
     }

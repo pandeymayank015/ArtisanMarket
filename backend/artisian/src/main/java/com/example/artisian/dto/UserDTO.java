@@ -1,11 +1,18 @@
 package com.example.artisian.dto;
 
+import javax.persistence.Column;
+
 public class UserDTO {
 
     private String username;
     private String email;
     private String base64Image; // Base64 encoded image
     private String roleName;
+    private String profession;
+    private String address;
+    private String contact;
+    private boolean ProfileVisibility;
+   
 
     public String getUsername() {
         return username;
@@ -39,4 +46,35 @@ public class UserDTO {
         this.roleName = roleName;
     }
 
+     public String getProfession(){
+        return profession;
+    }
+
+     public void setProfession(String profession) {
+        this.profession = profession;
+    }
+
+     public String getAddress(){
+        return address;
+    }
+
+     public void setAddress(String address) {
+        this.address = address;
+    }
+
+     public String getContact(){
+        return contact;
+    }
+
+     public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+     public boolean getProfileVisibility() {
+        return ProfileVisibility;
+    }
+
+    public void setProfileVisibility(String username) {
+        this.ProfileVisibility = ProfileVisibility;
+    }
 }
