@@ -1,4 +1,3 @@
-// src/components/UserProfile.js
 import React, { useState, useEffect } from 'react';
 import '../styles/profile.css';
 import axios from 'axios';
@@ -13,25 +12,24 @@ const UserProfile = () => {
   });
 
   useEffect(() => {
-    // Simulate fetching user profile data
-    const mockUserData = {
-      username: 'JohnDoe',
-      email: 'john@example.com',
-      address: '123 Main St',
-      contact: '123-456-7890',
+    // Fetch user profile data from the backend
+    const fetchUserProfile = async () => {
+      try {
+        const response = await axios.get(`/api/users/${localStorage.getItem('currentUser')?.username}`);
+        setUserInfo(response.data);
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+      }
     };
 
-    setUserInfo(mockUserData);
+    fetchUserProfile();
   }, []);
 
   const handleUpdateProfile = async () => {
     try {
-      // Simulate updating user profile
-      console.log('Simulating user profile update:', userInfo);
-
-      // Uncomment the following lines when you have the actual update logic
-      // await axios.post('/api/user', userInfo);
-      // console.log('User profile updated successfully!');
+      // Make an API call to update the user profile
+      await axios.put('/api/users/', userInfo);
+      console.log('User profile updated successfully!');
     } catch (error) {
       console.error('Error updating user profile:', error);
     }
@@ -58,7 +56,7 @@ const UserProfile = () => {
     <span className="toggle-name">{profileVisible ? 'Show Profile' : 'Hide Profile'}</span>
   </label>
   </div>
-        </div>
+  </div>
         <form>
           <div className="form-fields">
             <label>Username:</label>
@@ -105,7 +103,6 @@ const UserProfile = () => {
           </button>
         </form>
       </div>
-
     </div>
   );
 };
