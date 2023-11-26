@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class AuthService {
-
     @Autowired
     AuthenticationManager authenticationManager;
 
@@ -47,24 +46,27 @@ public class AuthService {
     JwtUtils jwtUtils;
 
     public ResponseEntity<?> authenticateUser(LoginDTO loginDTO) {
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword())
+        );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-        ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
+        String jwtToken = jwtUtils.generateJwtToken(userDetails);
 
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-                .body(new UserInfoResponseDTO(userDetails.getId(),
-                        userDetails.getUsername(),
-                        userDetails.getEmail(),
-                        roles));
+        // Modify the response to include the token in response.data
+        UserInfoResponseDTO userInfoResponse = new UserInfoResponseDTO(userDetails.getId(),
+                userDetails.getUsername(),
+                userDetails.getEmail(),
+                roles);
+        userInfoResponse.setJwtToken(jwtToken);
+        return ResponseEntity.ok(userInfoResponse);
     }
 
     public ResponseEntity<?> registerUser(RegisterDTO registerDTO) throws IOException {
@@ -112,8 +114,8 @@ public class AuthService {
     }
 
     public ResponseEntity<?> logoutUser() {
-        ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
+        return ResponseEntity.ok()
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtUtils.getCleanJwtToken())
                 .body(new MessageResponseDTO("You've been signed out!"));
     }
 
