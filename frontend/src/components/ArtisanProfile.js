@@ -1,5 +1,5 @@
 // src/components/ArtisanProfile.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../styles/profile.css';
 
@@ -14,22 +14,26 @@ const ArtisanProfile = () => {
   });
 
   useEffect(() => {
-    fetchArtisanProfile();
-  }, []);
+    // Simulate fetching artisan profile data
+    const mockArtisanData = {
+      username: 'ArtisanDoe',
+      email: 'artisan@example.com',
+      address: '456 Craft St',
+      contact: '987-654-3210',
+      profession: 'Painter',
+    };
 
-  const fetchArtisanProfile = async () => {
-    try {
-      const response = await axios.get('/api/artisan');
-      setArtisanInfo(response.data);
-    } catch (error) {
-      console.error('Error fetching artisan profile:', error);
-    }
-  };
+    setArtisanInfo(mockArtisanData);
+  }, []);
 
   const handleUpdateProfile = async () => {
     try {
-      await axios.post('/api/artisan', artisanInfo);
-      console.log('Artisan profile updated successfully!');
+      // Simulate updating artisan profile
+      console.log('Simulating artisan profile update:', artisanInfo);
+
+      // Uncomment the following lines when you have the actual update logic
+      // await axios.post('/api/artisan', artisanInfo);
+      // console.log('Artisan profile updated successfully!');
     } catch (error) {
       console.error('Error updating artisan profile:', error);
     }
@@ -39,11 +43,27 @@ const ArtisanProfile = () => {
     <div className='view-container'>
       <div className="profile-container">
         <div className="profile-picture-container">
-          <img src={"/* Add source of the profile picture here */"} alt="Profile" className="profile-picture" />
+          <img src={"https://i.pinimg.com/474x/0f/4a/ba/0f4aba8348df3a41b51ae07371088190.jpg"} alt="Profile" className="profile-picture" />
+          <br></br>
           <input type="file" className="profile-picture-input" accept="image/*" onChange={"/* Add onChange handler for updating the photo */"} />
+
+<br></br>
+<br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+<div className="toggle-container">
+  <input
+    type="checkbox"
+    className="toggle-input"
+    id="profileToggle"
+    checked={profileVisible}
+    onChange={() => setProfileVisible(!profileVisible)}
+  />
+  <label htmlFor="profileToggle" className="toggle-label">
+    <span className="toggle-name">{profileVisible ? 'Show Profile' : 'Hide Profile'}</span>
+  </label>
+</div>
+
         </div>
         <form className="profile-form">
-
           <div className="form-fields">
             <label>Username:</label>
             <input
@@ -94,9 +114,6 @@ const ArtisanProfile = () => {
           </button>
         </form>
       </div>
-      <button type="button" className="toggle-button" onClick={() => setProfileVisible(!profileVisible)}>
-        {profileVisible ? 'Hide Profile' : 'Show Profile'}
-      </button>
     </div>
   );
 };
