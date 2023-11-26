@@ -58,7 +58,7 @@ public class SecurityConfig {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
-                        auth.antMatchers("/api/auth/**").permitAll()
+                        auth.antMatchers("/api/**").permitAll()
                                 .anyRequest().authenticated()
                 );
 
