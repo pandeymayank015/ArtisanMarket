@@ -1,20 +1,38 @@
 // src/components/ArtisanProfile.js
 import React, { useState } from 'react';
+import axios from 'axios';
 import '../styles/profile.css';
 
 const ArtisanProfile = () => {
   const [profileVisible, setProfileVisible] = useState(true);
   const [artisanInfo, setArtisanInfo] = useState({
-    username: 'ArtisanDoe',
-    email: 'artisan@example.com',
-    address: '456 Craft St',
-    contact: '987-654-3210',
-    profession: 'Painter',
+    username: '',
+    email: '',
+    address: '',
+    contact: '',
+    profession: '',
   });
 
-  const handleUpdateProfile = () => {
-    // Implement logic to update the artisan profile
-    console.log('Updating artisan profile:', artisanInfo);
+  useEffect(() => {
+    fetchArtisanProfile();
+  }, []);
+
+  const fetchArtisanProfile = async () => {
+    try {
+      const response = await axios.get('/api/artisan');
+      setArtisanInfo(response.data);
+    } catch (error) {
+      console.error('Error fetching artisan profile:', error);
+    }
+  };
+
+  const handleUpdateProfile = async () => {
+    try {
+      await axios.post('/api/artisan', artisanInfo);
+      console.log('Artisan profile updated successfully!');
+    } catch (error) {
+      console.error('Error updating artisan profile:', error);
+    }
   };
 
   return (

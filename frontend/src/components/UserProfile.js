@@ -1,20 +1,37 @@
 // src/components/UserProfile.js
 import React, { useState } from 'react';
 import '../styles/profile.css';
+import axios from 'axios';
 
 const UserProfile = () => {
   const [profileVisible, setProfileVisible] = useState(true);
-
   const [userInfo, setUserInfo] = useState({
-    username: 'JohnDoe',
-    email: 'john@example.com',
-    address: '123 Main St',
-    contact: '123-456-7890',
+    username: '',
+    email: '',
+    address: '',
+    contact: '',
   });
 
-  const handleUpdateProfile = () => {
-    // Implement logic to update the user profile
-    console.log('Updating user profile:', userInfo);
+  useEffect(() => {
+    fetchUserProfile();
+  }, []);
+
+  const fetchUserProfile = async () => {
+    try {
+      const response = await axios.get('/api/user'); // Assuming your user API endpoint is '/api/user'
+      setUserInfo(response.data);
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+    }
+  };
+
+  const handleUpdateProfile = async () => {
+    try {
+      await axios.post('/api/user', userInfo); // Assuming your user API endpoint is '/api/user'
+      console.log('User profile updated successfully!');
+    } catch (error) {
+      console.error('Error updating user profile:', error);
+    }
   };
 
   return (
