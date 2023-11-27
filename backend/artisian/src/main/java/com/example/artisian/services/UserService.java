@@ -59,6 +59,9 @@ public class UserService {
         if (user.getRole() != null) {
             userDTO.setRoleName(user.getRole().getName().name());
         }
+        userDTO.setContact(user.getContact());
+        userDTO.setProfession(user.getProfession());
+        userDTO.setAddress(user.getAddress());
         return userDTO;
     }
 
