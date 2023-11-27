@@ -32,6 +32,7 @@ public class ResourceService {
         Map<ContentType, List<ResourceDTO>> resourcesByType = null;
         if (userName != null) {
             resourcesByType = repo.findAll().stream()
+                    .filter(resource -> resource.getPublishedBy().getUsername().equals(userName))
                     .map(this::convertToDTO)
                     .collect(Collectors.groupingBy(ResourceDTO::getType));
         }
