@@ -1,9 +1,14 @@
 package com.example.artisian.entity;
 
+import org.hibernate.annotations.Type;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 
 import javax.persistence.*;
 import javax.persistence.*;
+import java.io.IOException;
+
 //kova
 @Entity
 @Table(name = "products")
@@ -26,17 +31,22 @@ public class Product {
 
     @Column(nullable = false)
     private int rating;
+    @Lob
+    @Type(type = "org.hibernate.type.ImageType")
+    private byte[] image;
 
     public Product() {
         // Default constructor
     }
 
-    public Product(String name, String description, double price, String category, int rating) {
+
+    public Product(String name, String description, double price, String category, int rating,byte[] image) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.category = category;
         this.rating = rating;
+        this.image = image;
     }
 
     // Getters and setters for id, name, description, price
@@ -88,4 +98,14 @@ public class Product {
     public void setRating(int rating) {
         this.rating = rating;
     }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+
 }
