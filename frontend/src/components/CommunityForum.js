@@ -1,41 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/community-forum.css';
-
-
+import axios from 'axios';
+ 
 const CommunityForum = () => {
-  const [threads, setThreads] = useState([
-    {
-      id: 1,
-      title: 'Introduction Thread',
-      author: 'JohnDoe',
-      date: '2023-12-01',
-      content: 'Welcome to our community! Introduce yourself here.',
-      comments: [
-        { id: 1, author: 'JaneSmith', date: '2023-12-02', content: 'Hello, everyone!' },
-        { id: 2, author: 'BobJohnson', date: '2023-12-02', content: 'Nice to meet you all!' },
-      ],
-    },
-    // Add more threads as needed
-  ]);
-
+  const [threads, setThreads] = useState([]);
   const [newThread, setNewThread] = useState({
     title: '',
-    author: 'CurrentUser', // Replace with actual user authentication
+    author: '',
     content: '',
   });
-
-  const handleNewThread = () => {
-    // Implement logic to create a new thread
-    const updatedThreads = [...threads, { ...newThread, id: threads.length + 1, date: new Date().toISOString(), comments: [] }];
-    setThreads(updatedThreads);
-    setNewThread({ title: '', author: 'CurrentUser', content: '' });
+ 
+  useEffect(() => {
+    fetchThreads();
+  }, []);
+ 
+  const fetchThreads = async () => {
+    try {
+      const response = await axios.get('http://localhost:9091/api/threads/getAll');
+      setThreads(response.data);
+    } catch (error) {
+      console.error('Error fetching threads:', error);
+    }
   };
-
+ 
+  const handleNewThread = async () => {
+    try {
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+   
+      console.log('JWT Token:', localStorage.getItem('jwtToken'));
+      console.log('Current User:', currentUser);
+   
+      if (currentUser && currentUser.username) {
+        console.log('Author:', currentUser.username);
+   
+        const threadPayload = {
+          username: currentUser.username,
+          threadTitle: newThread.title,
+          threadContent: newThread.content,
+        };
+   
+        await axios.post('http://localhost:9091/api/threads/create', threadPayload);
+   
+        fetchThreads();
+   
+        setNewThread({ title: '', author: '', content: '' });
+      } else {
+        console.error('User details or username not found in localStorage.');
+      }
+    } catch (error) {
+      console.error('Error creating thread:', error);
+    }
+  };
+ 
   return (
     <div className="page-container view-container">
       <div className="community-forum-container">
         <h2>Community Forum</h2>
-
+ 
         {/* New Thread Form */}
         <div className="new-thread-form">
           <input
@@ -53,25 +74,13 @@ const CommunityForum = () => {
             Create Thread
           </button>
         </div>
-
-        {/* List of Threads */}
+ 
         <div className="thread-list">
           {threads.map((thread) => (
             <div key={thread.id} className="thread">
-              <h3>{thread.title}</h3>
-              <p>{`by ${thread.author} on ${new Date(thread.date).toLocaleDateString()}`}</p>
-              <p>{thread.content}</p>
-
-              {/* Comments Section */}
-              <div className="comments-section">
-                <h4>Comments</h4>
-                {thread.comments.map((comment) => (
-                  <div key={comment.id} className="comment">
-                    <p>{`by ${comment.author} on ${new Date(comment.date).toLocaleDateString()}`}</p>
-                    <p>{comment.content}</p>
-                  </div>
-                ))}
-              </div>
+              <h3>{thread.threadTitle}</h3>
+              <p>{`by ${thread.username}`}</p>
+              <p>{thread.threadContent}</p>
             </div>
           ))}
         </div>
@@ -79,5 +88,5 @@ const CommunityForum = () => {
     </div>
   );
 };
-
+ 
 export default CommunityForum;
