@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Modal from 'react-modal'; // Import the Modal component
 import { url } from '../../utils/ApiUrls';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Events = () => {
   const [events, setEvents] = useState([]);
@@ -101,6 +103,12 @@ const Events = () => {
 
   const handleInviteSubmit = async () => {
     try {
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!inviteEmail || !emailRegex.test(inviteEmail)) {
+        toast.error('Please enter a valid email address');
+        return;
+      }
       const token = localStorage.getItem('jwtToken');
       const user = JSON.parse(localStorage.getItem('currentUser'));
 
@@ -119,10 +127,10 @@ const Events = () => {
       );
 
       if (response.status === 200) {
-        alert('Invitation sent successfully.');
+        toast.success('Invitation sent successfully.');
         setInviteEmail('');
       } else {
-        alert('Error sending invitation.');
+        toast.error('Error sending invitation.');
       }
     } catch (error) {
       console.error('Error sending invitation:', error);
@@ -174,12 +182,18 @@ const Events = () => {
        {/* Invite Modal */}
        <Modal
           isOpen={isInviteModalOpen}
-          onRequestClose={() => setInviteModalOpen(false)}
+          onRequestClose={() => {
+            setInviteModalOpen(false);
+            setInviteEmail(''); // Clear the inviteEmail on close
+          }}
           contentLabel="Invite Modal"
           style={modalStyles} // Apply the custom styles
         >
           <button
-              onClick={() => setInviteModalOpen(false)}
+             onClick={() => {
+              setInviteModalOpen(false);
+              setInviteEmail(''); // Clear the inviteEmail on click
+            }}
               style={{ alignSelf: 'flex-end', padding: '8px', cursor: 'pointer', fontSize: '16px', height: '35px' }}
             >
               X
@@ -198,10 +212,16 @@ const Events = () => {
             >
               Send Invite
             </button>
-            <button onClick={() => setInviteModalOpen(false)} style={{ padding: '8px', width: '30%' }}>Cancel</button>
+            <button
+            onClick={() => {
+              setInviteModalOpen(false);
+              setInviteEmail('');
+            }
+            } style={{ padding: '8px', width: '30%' }}>Cancel</button>
           </div>
         </Modal>
       </div>
+      <ToastContainer />
     </div>
     </div>
   );
