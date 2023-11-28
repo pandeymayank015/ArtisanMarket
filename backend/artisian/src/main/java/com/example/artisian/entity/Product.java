@@ -53,6 +53,14 @@ public class Product {
         this.image = image;
         this.userId = userId;
     }
+    public Product(String name, String description, double price, String category, int rating,String userId) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.category = category;
+        this.rating = rating;
+        this.userId = userId;
+    }
 
     // Getters and setters for id, name, description, price
 

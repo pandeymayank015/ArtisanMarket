@@ -51,6 +51,7 @@ public class ProductService {
         productReturnDTO.setPrice(user.getPrice());
         productReturnDTO.setRating(user.getRating());
         productReturnDTO.setCategory(user.getCategory());
+        productReturnDTO.setUserId(user.getUserId());
         if (user.getImage() != null) {
             String base64Image;
             try {
@@ -96,14 +97,13 @@ public class ProductService {
         return productRepository.findById(productId);
     }
 
-    public Product updateProduct(ProductDTO productDTO,Long id) throws IOException {
+    public Product updateProduct(ProductReturnDTO productDTO,Long id) throws IOException {
+        byte[] decodedImage = ImageUtils.compressImage(Base64.getDecoder().decode(productDTO.getBase64Image()));
 
-        var compressImage = ImageUtils.compressImage(productDTO.getImage().getBytes());
         Product product = new Product(productDTO.getName(),
                 productDTO.getDescription(),
                 productDTO.getPrice(),
-                productDTO.getCategory(), productDTO.getRating(),
-                compressImage, productDTO.getUserId());
+                productDTO.getCategory(), productDTO.getRating(),decodedImage, productDTO.getUserId());
         product.setId(id);
         return productRepository.save(product);
     }

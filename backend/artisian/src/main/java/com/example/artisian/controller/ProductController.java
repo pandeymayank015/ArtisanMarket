@@ -48,7 +48,7 @@ public class ProductController {
 
     @PutMapping("update/{productId}")
     @CrossOrigin(origins = "*")
-    public ResponseEntity<String> updateProduct(@PathVariable Long productId, @ModelAttribute ProductDTO updatedProduct) throws IOException {
+    public ResponseEntity<String> updateProduct(@PathVariable Long productId, @RequestBody ProductReturnDTO updatedProduct) throws IOException {
         Optional<Product> product = productService.getProductById(productId);
         if (product.isPresent()) {
             updatedProduct.setId(productId); // Ensure the ID of the updated product matches the path variable ID
