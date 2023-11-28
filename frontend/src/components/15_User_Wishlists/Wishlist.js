@@ -30,12 +30,13 @@ const Wishlist = () => {
 
   const removeFromWishlist = async () => {
     try {
-      const response = await fetch(`${url}/api/wishlist/remove/${userId}/${productId}`, {
+      const response = await fetch(`${url}/wishlist/remove/${userId}/${productId}`, {
         method: 'DELETE',
       });
 
       if (response.ok) {
         alert('Product removed from wishlist');
+        window.location.reload();
         // You can add further logic here, such as updating the UI or fetching the updated wishlist.
       } else {
         alert('Error removing product from wishlist');
@@ -49,12 +50,13 @@ const Wishlist = () => {
 
   const getUserWishlist = async () => {
     try {
-      const response = await fetch(`${url}/api/wishlist/${userId}`);
+      const response = await fetch(`${url}/wishlist/${userId}`);
       if (response.ok) {
         const wishlistData = await response.json();
+        alert("Fetch done!");
   
         // Fetch all products
-        const productsResponse = await fetch(`${url}/api/products`);
+        const productsResponse = await fetch(`${url}/products`);
         if (!productsResponse.ok) {
           console.error('Error fetching all products');
           alert('Error fetching wishlist');

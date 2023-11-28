@@ -10,7 +10,7 @@ const UpdateProductRatingForm = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(url + '/api/products');
+        const response = await fetch(url + '/products');
         if (response.ok) {
             const productsData = await response.json();
             if (productsData.length === 0) {
@@ -47,18 +47,30 @@ const UpdateProductRatingForm = () => {
       return;
     }
 
-    const updatedProduct = {
-      ...product,
-      rating: newRating,
-    };
+    // const updatedProduct = {
+    //   ...product,
+    //   rating: newRating,
+    // };
+    const formData = new FormData();
+    formData.append('id', product.id);
+    formData.append('name', product.name);
+    formData.append('description', product.description);
+    formData.append('price', product.price);
+    formData.append('category', product.category);
+    formData.append('image', product.image);
+    formData.append('rating', newRating);
 
     try {
+      // const response = await fetch(`${url}/products/update/${productId}`, {
+      //   method: 'PUT',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(updatedProduct),
+      // });
       const response = await fetch(`${url}/products/update/${productId}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedProduct),
+        body: formData,
       });
 
       if (response.ok) {
