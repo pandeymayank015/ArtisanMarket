@@ -8,7 +8,7 @@ const DeleteProductForm = ({ onRemove }) => {
   const handleDelete = async () => {
     try {
       if (productId) {
-        const response = await fetch(`${url}/api/products/delete/${productId}`, {
+        const response = await fetch(`${url}/products/delete/${productId}`, {
           method: 'DELETE',
         });
 

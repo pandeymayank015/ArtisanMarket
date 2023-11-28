@@ -8,7 +8,7 @@ const Wishlist = () => {
 
   const addToWishlist = async () => {
     try {
-      const response = await fetch(`${url}/api/wishlist/add`, {
+      const response = await fetch(`${url}/wishlist/add`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

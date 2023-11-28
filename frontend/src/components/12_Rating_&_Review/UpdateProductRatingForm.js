@@ -53,7 +53,7 @@ const UpdateProductRatingForm = () => {
     };
 
     try {
-      const response = await fetch(`${url}/api/products/update/${productId}`, {
+      const response = await fetch(`${url}/products/update/${productId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

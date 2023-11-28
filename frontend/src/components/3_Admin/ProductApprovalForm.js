@@ -44,7 +44,7 @@ const ProductApprovalForm = () => {
 
   const handleApproveProduct = async () => {
     try {
-      const response = await fetch(`${url}/api/products/approve/${productIdForApproval}`, {
+      const response = await fetch(`${url}/products/approve/${productIdForApproval}`, {
         method: 'PUT',
       });
 

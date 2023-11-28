@@ -22,7 +22,7 @@ const ModifyProductForm = ({ onSubmit }) => {
 
     try {
       // Send a request to the backend API to add the product
-      const response = await fetch(`${url}/api/products/update/${productID}`, {
+      const response = await fetch(`${url}/products/update/${productID}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
