@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/profile.css';
 import axios from 'axios';
- 
+import { url } from '../utils/ApiUrls';
+import ToastPopUp from './toast_popup/ToastPopUp';
+
 const UserProfile = () => {
   const [profileVisible, setProfileVisible] = useState(true);
   const [userInfo, setUserInfo] = useState({
@@ -11,41 +12,42 @@ const UserProfile = () => {
     contact: '',
     profilePicture: '',
   });
- 
+  const [showToast, setShowToast] = useState(false); 
+
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        // Extract username from localStorage
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         console.log('Current User:', currentUser);
- 
-        const response = await axios.get(`http://localhost:9091/api/users/${currentUser?.username}`);
+
+        const response = await axios.get(url + `/api/users/${currentUser?.username}`);
         setUserInfo({
           ...response.data,
-          profilePicture: response.data.base64Image, // Assuming the base64 image is returned in the API response
+          profilePicture: response.data.base64Image,
         });
       } catch (error) {
         console.error('Error fetching user profile:', error);
       }
     };
- 
+
     fetchUserProfile();
   }, []);
- 
+
   const handleUpdateProfile = async () => {
     try {
-      await axios.put('http://localhost:9091/api/users/', userInfo);
+      await axios.put(url + '/api/users/', userInfo);
       console.log('User profile updated successfully!');
+      setShowToast(true); 
     } catch (error) {
       console.error('Error updating user profile:', error);
     }
   };
- 
+
   return (
     <div className='view-container'>
       <div className="profile-container">
         <div className="profile-picture-container">
-        <img src={`data:image/png;base64,${userInfo.profilePicture}`} alt="Profile" className="profile-picture" />
+          <img src={`data:image/png;base64,${userInfo.profilePicture}`} alt="Profile" className="profile-picture" />
           <br />
           <input type="file" className="profile-picture-input" accept="image/*" onChange={"* Add onChange handler for updating the photo */"} />
           <br />
@@ -103,9 +105,11 @@ const UserProfile = () => {
             Update Profile
           </button>
         </form>
+
+        <ToastPopUp show={showToast} />
       </div>
     </div>
   );
 };
- 
+
 export default UserProfile;

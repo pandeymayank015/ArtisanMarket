@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/community-forum.css';
 import axios from 'axios';
- 
+import { url } from '../utils/ApiUrls';
+
 const CommunityForum = () => {
   const [threads, setThreads] = useState([]);
   const [newThread, setNewThread] = useState({
@@ -16,7 +17,7 @@ const CommunityForum = () => {
  
   const fetchThreads = async () => {
     try {
-      const response = await axios.get('http://localhost:9091/api/threads/getAll');
+      const response = await axios.get(url+'/api/threads/getAll');
       setThreads(response.data);
     } catch (error) {
       console.error('Error fetching threads:', error);
@@ -39,7 +40,7 @@ const CommunityForum = () => {
           threadContent: newThread.content,
         };
    
-        await axios.post('http://localhost:9091/api/threads/create', threadPayload);
+        await axios.post(url+'/api/threads/create', threadPayload);
    
         fetchThreads();
    
