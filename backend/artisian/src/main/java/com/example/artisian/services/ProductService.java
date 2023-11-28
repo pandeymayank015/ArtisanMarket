@@ -18,7 +18,8 @@ import java.io.IOException;
 import java.util.*;
 
 import org.springframework.stereotype.Service;
-import java.util.List;
+
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.zip.DataFormatException;
 
@@ -38,8 +39,7 @@ public class ProductService {
         List<Product> users = productRepository.findAll();
         if (!users.isEmpty()) {
             return users.stream()
-                    .filter(user -> user != null
-                    )
+                    .filter(user -> user != null)
                     .map(user -> {
                         ProductReturnDTO userDTO = convertEntityToDTO(user);
                         return userDTO;
@@ -87,16 +87,13 @@ public class ProductService {
 
     public ResponseEntity<?> addProductAfterApproval(Product product) throws IOException {
 
-
         productRepository.save(product);
         return ResponseEntity.ok(new MessageResponseDTO("product update successfull"));
     }
 
-
     public void deleteProductById(Long productId) {
         productRepository.deleteById(productId);
     }
-
 
     public Optional<Product> getProductById(Long productId) {
 
@@ -131,22 +128,15 @@ public class ProductService {
                 return productEntity;
             }
         }
-            return null;
+        return null;
 
     }
-
-
-
-
-
-
 
     public List<ProductReturnDTO> getAllProductsByOrder() {
         List<Product> users = productRepository.findAllByOrderByRatingDesc();
         if (!users.isEmpty()) {
             return users.stream()
-                    .filter(user -> user != null
-                    )
+                    .filter(user -> user != null)
                     .map(user -> {
                         ProductReturnDTO userDTO = convertEntityToDTO(user);
                         return userDTO;
@@ -156,35 +146,39 @@ public class ProductService {
         return new ArrayList<>();
     }
 
-
     // Other methods for modifying products
 
-    public List<Product> getFeaturedProducts(int limit) {
+    public List<ProductReturnDTO> getFeaturedProducts(int limit) {
         List<Product> products = productRepository.findAllByOrderByRatingDesc();
         if (products == null || products.isEmpty()) {
             return new ArrayList<>();
         }
         return productRepository.findAllByOrderByRatingDesc()
-                .subList(0, products.size() >= limit ? limit : products.size());
+                .subList(0, products.size() >= limit ? limit : products.size())
+                .stream().map(this::convertEntityToDTO).collect(Collectors.toList());
     }
 
-    public Map<String, List<Product>> getGroupedProducts() {
-        Map<String, List<Product>> productMap = productRepository.findAll().stream()
-                .collect(Collectors.groupingBy(Product::getCategory));
+    public Map<String, List<ProductReturnDTO>> getGroupedProducts() {
+        Map<String, List<ProductReturnDTO>> productMap = productRepository.findAll()
+                .stream()
+                .map(this::convertEntityToDTO)
+                .collect(Collectors.groupingBy(ProductReturnDTO::getCategory));
         productMap.entrySet().removeIf(entry -> entry.getValue().isEmpty());
         return productMap;
     }
 
-    public Map<String, List<Product>> getSearchedProducts(String searchKey, String category) {
+    public Map<String, List<ProductReturnDTO>> getSearchedProducts(String searchKey, String category) {
         if (searchKey != null && !searchKey.isEmpty()) {
-            Map<String, List<Product>> productMap = null;
+            Map<String, List<ProductReturnDTO>> productMap = null;
             if (category.equals("All")) {
                 productMap = productRepository.findByProductNameContaining(searchKey).stream()
-                        .collect(Collectors.groupingBy(Product::getCategory));
+                        .map(this::convertEntityToDTO)
+                        .collect(Collectors.groupingBy(ProductReturnDTO::getCategory));
 
             } else {
                 productMap = productRepository.findByProductNameContainingAndCategory(searchKey, category).stream()
-                        .collect(Collectors.groupingBy(Product::getCategory));
+                        .map(this::convertEntityToDTO)
+                        .collect(Collectors.groupingBy(ProductReturnDTO::getCategory));
             }
             productMap.entrySet().removeIf(entry -> entry.getValue().isEmpty());
             return productMap;

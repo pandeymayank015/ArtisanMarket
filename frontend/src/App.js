@@ -40,19 +40,6 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
 
-          <Route path="/user-profile" element={<UserProfile />} />
-          <Route path="/artisan-profile" element={<ArtisanProfile />} />
-          <Route path="/community-forum" element={<CommunityForum />} />
-          <Route path="/event-calendar" element={<EventCalendar />} />
-          <Route path="/resource-center" element={<ResourceCenter />} />
-          <Route path="/artisan/:username" element={<ArtisanWorkshopProfile />} />
-          <Route path="/upload/:username" element={<UploadForm />} />
-          <Route path="/ArtisanStoreManagement" element={<ArtisanStoreManagement />} />
-          <Route path="/ProductApprovalForm" element={<ProductApprovalForm />} />
-          <Route path="/UpdateProductRatingForm" element={<UpdateProductRatingForm />} />
-          <Route path="/Wishlist" element={<Wishlist />} />
-          <Route path="/blog" element={<BlogDetails />} />
-
           <Route
             path="/resource-center"
             element={<AuthGuard isAuthenticated={isAuthenticated}><ResourceCenter /></AuthGuard>}

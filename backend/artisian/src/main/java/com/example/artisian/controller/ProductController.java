@@ -28,7 +28,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -65,14 +64,11 @@ public class ProductController {
 
     @PutMapping("update/{productId}")
     @CrossOrigin(origins = "*")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long productId, @RequestBody ProductReturnDTO updatedProduct) throws IOException {
-            return  ResponseEntity.ok(productService.updateProduct(updatedProduct,productId));
+    public ResponseEntity<Product> updateProduct(@PathVariable Long productId,
+            @RequestBody ProductReturnDTO updatedProduct) throws IOException {
+        return ResponseEntity.ok(productService.updateProduct(updatedProduct, productId));
 
-
-}
-
-
-
+    }
 
     @PostMapping("/user-add")
     public ResponseEntity<?> addUserProduct(@ModelAttribute ProductDTO product) throws IOException {
@@ -84,6 +80,7 @@ public class ProductController {
         List<ProductReturnDTO> products = adminApprovalService.getAllProducts();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
+
     @PutMapping("/approve/{productId}")
     @CrossOrigin(origins = "*")
 
@@ -91,7 +88,9 @@ public class ProductController {
         AdminApproval adminApproval = adminApprovalService.getAdminApprovalByProductId(productId);
 
         if (adminApproval != null) {
-            Product productToAdd = new Product(adminApproval.getName(),adminApproval.getDescription(),adminApproval.getPrice(),adminApproval.getCategory(),adminApproval.getRating(),adminApproval.getImage(),adminApproval.getUserId());
+            Product productToAdd = new Product(adminApproval.getName(), adminApproval.getDescription(),
+                    adminApproval.getPrice(), adminApproval.getCategory(), adminApproval.getRating(),
+                    adminApproval.getImage(), adminApproval.getUserId());
 
             productService.addProductAfterApproval(productToAdd); // Add the product to the Product table
             adminApprovalService.deleteAdminApproval(adminApproval); // Delete from AdminApproval table
@@ -109,7 +108,7 @@ public class ProductController {
     }
 
     @GetMapping("/featured/{limit}")
-    public ResponseEntity<List<Product>> getFeaturedProducts(@PathVariable int limit) {
+    public ResponseEntity<List<ProductReturnDTO>> getFeaturedProducts(@PathVariable int limit) {
         if (limit > 0) {
             return ResponseEntity.ok(productService.getFeaturedProducts(limit));
         } else {
@@ -118,12 +117,12 @@ public class ProductController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Map<String, List<Product>>> getCategorizedProducts() {
+    public ResponseEntity<Map<String, List<ProductReturnDTO>>> getCategorizedProducts() {
         return ResponseEntity.ok(productService.getGroupedProducts());
     }
 
     @GetMapping("/search/{keyword}")
-    public ResponseEntity<Map<String, List<Product>>> getCategorizedProducts(@PathVariable String keyword,
+    public ResponseEntity<Map<String, List<ProductReturnDTO>>> getCategorizedProducts(@PathVariable String keyword,
             @RequestParam(name = "category", required = false) String category) {
         return ResponseEntity.ok(productService.getSearchedProducts(keyword, category));
     }
