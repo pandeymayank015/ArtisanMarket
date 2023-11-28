@@ -19,32 +19,32 @@ public class EventController {
     private EventService eventService;
 
     @PostMapping("/create")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public EventEntity createEvent(@RequestBody EventEntity event) {
         return eventService.createEvent(event);
     }
 
     @GetMapping("/all")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public List<EventEntity> getAllEvents() {
         return eventService.getAllEvents();
     }
 
     @PostMapping("/register/{eventId}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public EventEntity registerForEvent(@PathVariable Long eventId, @RequestBody EventRegistrationDTO eventRegistationDTO) {
         return eventService.registerForEvent(eventId, eventRegistationDTO);
     }
 
     @GetMapping("/registeredEvents")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<List<EventEntity>> getRegisteredEventsForUser(@RequestParam String username) {
         List<EventEntity> registeredEvents = eventService.getRegisteredEventsForUser(username);
         return ResponseEntity.ok(registeredEvents);
     }
 
     @PostMapping("/invite")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<String> inviteForEvent(@RequestBody InvitationRequestDTO invitationRequestDTO) {
         try {
             eventService.sendInvitationEmail(invitationRequestDTO);

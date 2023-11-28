@@ -70,40 +70,40 @@ const EventCreation = () => {
 
   return (
     <div className='view-container p-4'>
-      <div className="event-creation-container" style={{ border: '2px solid black', padding: '20px', borderRadius: '10px', margin: '0 20px' }}>
+      <div className="event-creation-container" style={{ border: '2px solid black', padding: '20px', borderRadius: '10px', margin: '0 20px', width: '400px' }}>
         <h2 style={{ textAlign: 'center' }}>Create an Event</h2>
         <form onSubmit={handleFormSubmit} style={{ textAlign: 'center' }}>
           <div style={{ marginBottom: '10px' }}>
-            <label style={{ marginRight: '20px', width: '150px', textAlign: 'left', fontWeight: 'bold' }}>Event Name:</label>
+            <label style={{ marginRight: '20px', width: '200px', textAlign: 'left', fontWeight: 'bold' }}>Event Name:</label>
             <br />
-            <input style={{ width: '170px', textAlign: 'left' }} type="text" value={eventName} onChange={(e) => setEventName(e.target.value)} />
+            <input style={{ width: '220px', textAlign: 'left' }} type="text" value={eventName} onChange={(e) => setEventName(e.target.value)} />
           </div>
 
           <div style={{ marginBottom: '10px' }}>
-            <label style={{ marginRight: '20px', width: '150px', textAlign: 'left', fontWeight: 'bold' }}>Event Date:</label>
+            <label style={{ marginRight: '20px', width: '200px', textAlign: 'left', fontWeight: 'bold' }}>Event Date:</label>
             <br />
-            <input style={{ width: '170px' }} type="date" value={eventDate} onChange={(e) => setEventDate(e.target.value)} />
+            <input style={{ width: '220px' }} type="date" value={eventDate} onChange={(e) => setEventDate(e.target.value)} />
           </div>
 
           <div style={{ marginBottom: '10px' }}>
-            <label style={{ marginRight: '20px', width: '150px', textAlign: 'left', fontWeight: 'bold' }}>Event Time:</label>
+            <label style={{ marginRight: '20px', width: '200px', textAlign: 'left', fontWeight: 'bold' }}>Event Time:</label>
             <br />
-            <input style={{ width: '170px' }} type="time" value={eventTime} onChange={(e) => setEventTime(e.target.value)} />
+            <input style={{ width: '220px' }} type="time" value={eventTime} onChange={(e) => setEventTime(e.target.value)} />
           </div>
 
           <div style={{ marginBottom: '10px' }}>
-            <label style={{ marginRight: '20px', width: '150px', textAlign: 'left', fontWeight: 'bold' }}>Event Venue:</label>
+            <label style={{ marginRight: '20px', width: '200px', textAlign: 'left', fontWeight: 'bold' }}>Event Venue:</label>
             <br />
-            <input style={{ width: '170px' }} type="text" value={eventVenue} onChange={(e) => setEventVenue(e.target.value)} />
+            <input style={{ width: '220px' }} type="text" value={eventVenue} onChange={(e) => setEventVenue(e.target.value)} />
           </div>
 
           <div style={{ marginBottom: '10px' }}>
-            <label style={{ marginRight: '45px', width: '150px', textAlign: 'right', fontWeight: 'bold' }}>Event Description:</label>
+            <label style={{ marginRight: '145px', width: '200px', textAlign: 'right', fontWeight: 'bold' }}>Event Description:</label>
             <br />
-            <textarea style={{ width: '170px', height: '100px' }} value={eventDescription} onChange={(e) => setEventDescription(e.target.value)} />
+            <textarea style={{ width: '220px', height: '100px' }} value={eventDescription} onChange={(e) => setEventDescription(e.target.value)} />
           </div>
 
-          <button type="submit" style={{ marginLeft: '30px', marginTop: '10px', width: '170px' }}>Create Event</button>
+          <button type="submit" style={{ marginLeft: '90px', marginTop: '10px', width: '170px' }}>Create Event</button>
         </form>
         <ToastContainer />
       </div>
