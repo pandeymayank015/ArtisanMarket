@@ -42,6 +42,10 @@ const ModifyProductForm = ({ onSubmit }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (userEmail < 0 || userEmail > 5) {
+      alert('Rating must be between 0 and 5 stars.');
+      return;
+    }
     fetchProductByID();
     // const formData = new FormData();
     // formData.append('userId', userEmail);
@@ -54,7 +58,7 @@ const ModifyProductForm = ({ onSubmit }) => {
 
     const productData = {
       // userId: userEmail,
-      rating: productID,
+      rating: userEmail,
       name: productName,
       description: productDescription,
       price: productPrice,
@@ -161,7 +165,10 @@ const ModifyProductForm = ({ onSubmit }) => {
       <label>
         Rating:
         <input
-          type="text"
+          type="number"
+          placeholder="Give the stars in number (max 5)"
+          min="0"
+          max="5"
           value={userEmail}
           onChange={(e) => setUserEmail(e.target.value)}
         />
