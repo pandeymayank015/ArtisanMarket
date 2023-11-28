@@ -112,10 +112,11 @@ const Wishlist = () => {
     <table>
   <thead>
     <tr>
-      <th>|&nbsp;ID&nbsp;|</th>
-      <th>&nbsp;Name&nbsp;|</th>
-      <th>&nbsp;Price&nbsp;|</th>
-      <th>&nbsp;Category&nbsp;|</th>
+      <th>&nbsp;ID&nbsp;</th>
+      <th>&nbsp;Name&nbsp;</th>
+      <th>&nbsp;Price&nbsp;</th>
+      <th>&nbsp;Category&nbsp;</th>
+      <th>&nbsp;Image&nbsp;</th>
       {/* Add more table headers for additional details */}
     </tr>
   </thead>
@@ -126,6 +127,13 @@ const Wishlist = () => {
         <td>&nbsp;{item.name}&nbsp;</td>
         <td>&nbsp;{item.price}&nbsp;</td>
   <td>&nbsp;{item.category}&nbsp;</td>      
+  {item.base64Image && (
+            <img
+            src={`data:image/png;base64,${item.base64Image}`}  // Assuming the image is in PNG format; adjust accordingly
+            alt={`Image for ${item.name}`}
+            style={{ maxWidth: '50px', maxHeight: '50px' }} // Adjust the dimensions as needed
+          />
+          )}
       </tr>
     ))}
   </tbody>

@@ -132,7 +132,7 @@ const UpdateProductRatingForm = () => {
         </label>
 
         <button type="button" onClick={fetchProductById}>
-          Fetch Product
+          Fetch Rating
         </button>
         &nbsp;&nbsp;&nbsp;
         <button type="submit">Update Rating</button>
