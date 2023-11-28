@@ -33,6 +33,7 @@ public class ResourceEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
+    @Lob
     private String description;
     private Long publishedAt;
 
@@ -42,6 +43,7 @@ public class ResourceEntity {
     @Lob
     @Type(type = "org.hibernate.type.ImageType")
     private byte[] thumbnail;
+    @Lob
     private String content;
     private ContentType type;
 

@@ -32,10 +32,8 @@
 
 .artisan-info {
     width: 90%;
-    margin: auto;
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
 }
 
 .profile-pic {
@@ -71,7 +69,6 @@
 
 .profile-section {
     width: 90%;
-    margin: auto;
 }
 
 .blogs-container {
