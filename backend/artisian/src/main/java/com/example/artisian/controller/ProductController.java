@@ -46,53 +46,48 @@ public class ProductController {
         return new ResponseEntity<>("Product with ID " + productId + " has been deleted", HttpStatus.OK);
     }
 
-//    @PutMapping("update/{productId}")
-//    @CrossOrigin(origins = "*")
-//    public ResponseEntity<String> updateProduct(@PathVariable Long productId, @RequestBody Product updatedProduct) {
-//        Optional<Product> product = productService.getProductById(productId);
-//        if (product.isPresent()) {
-//            updatedProduct.setId(productId); // Ensure the ID of the updated product matches the path variable ID
-//            productService.updateProduct(updatedProduct);
-//            return new ResponseEntity<>("Product with ID " + productId + " has been updated", HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>("Product with ID " + productId + " not found", HttpStatus.NOT_FOUND);
-//        }
-//    }
-//    @PutMapping("update/{productId}")
-//    public ResponseEntity<?> updateProduct(@ModelAttribute ProductDTO productDTO,@PathVariable Long productId) throws IOException {
-//        Optional<Product> product = productService.getProductById(productId);
-//        return new ResponseEntity<>("Product with ID " + productId + " has been deleted", HttpStatus.OK);
-//    }
+    @PutMapping("update/{productId}")
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<String> updateProduct(@PathVariable Long productId, @ModelAttribute ProductDTO updatedProduct) throws IOException {
+        Optional<Product> product = productService.getProductById(productId);
+        if (product.isPresent()) {
+            updatedProduct.setId(productId); // Ensure the ID of the updated product matches the path variable ID
+            productService.updateProduct(updatedProduct,productId);
+            return new ResponseEntity<>("Product with ID " + productId + " has been updated", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Product with ID " + productId + " not found", HttpStatus.NOT_FOUND);
+        }
+}
+
+
+
 
     @PostMapping("/user-add")
-    @CrossOrigin(origins = "*")
-    public ResponseEntity<String> addUserProduct(@RequestBody AdminApproval product) {
-//        Product addedProduct = productService.addProduct(product);
-        adminApprovalService.addProduct(product); // Send for admin approval
-        return new ResponseEntity<>("Product added and sent for admin approval", HttpStatus.CREATED);
+    public ResponseEntity<?> addUserProduct(@ModelAttribute ProductDTO product) throws IOException {
+        return adminApprovalService.addProduct(product);
     }
 
     @PutMapping("/approve/{productId}")
     @CrossOrigin(origins = "*")
 
-//    public ResponseEntity<String> approveProduct(@PathVariable Long productId) {
-//        AdminApproval adminApproval = adminApprovalService.getAdminApprovalByProductId(productId);
-//
-//        if (adminApproval != null) {
-//            Product productToAdd = new Product(adminApproval.getName(), adminApproval.getDescription(), adminApproval.getPrice(), adminApproval.getCategory(), adminApproval.getRating(),adminApproval.getImage());
-//
-//            productService.addProduct(productToAdd); // Add the product to the Product table
-//            adminApprovalService.deleteAdminApproval(adminApproval); // Delete from AdminApproval table
-//
-//            return new ResponseEntity<>("Product added and moved from admin approval to product table", HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>("Admin approval not found for the given product ID", HttpStatus.NOT_FOUND);
-//        }
-//    }
+    public ResponseEntity<String> approveProduct(@PathVariable Long productId) throws IOException {
+        AdminApproval adminApproval = adminApprovalService.getAdminApprovalByProductId(productId);
+
+        if (adminApproval != null) {
+            Product productToAdd = new Product(adminApproval.getName(),adminApproval.getDescription(),adminApproval.getPrice(),adminApproval.getCategory(),adminApproval.getRating(),adminApproval.getImage());
+
+            productService.addProductAfterApproval(productToAdd); // Add the product to the Product table
+            adminApprovalService.deleteAdminApproval(adminApproval); // Delete from AdminApproval table
+
+            return new ResponseEntity<>("Product added and moved from admin approval to product table", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Admin approval not found for the given product ID", HttpStatus.NOT_FOUND);
+        }
+    }
 
     @GetMapping("/byOrder")
-    public ResponseEntity<List<Product>> getAllEntitiesInOrder() {
-        List<Product> products = productService.getAllProductsByOrder();
+    public ResponseEntity<List<ProductReturnDTO>> getAllEntitiesInOrder() {
+        List<ProductReturnDTO> products = productService.getAllProductsByOrder();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 

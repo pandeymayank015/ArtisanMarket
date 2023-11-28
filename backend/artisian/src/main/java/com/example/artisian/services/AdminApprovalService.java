@@ -1,10 +1,15 @@
 package com.example.artisian.services;
 
+import com.example.artisian.dto.MessageResponseDTO;
+import com.example.artisian.dto.ProductDTO;
 import com.example.artisian.entity.AdminApproval;
 import com.example.artisian.entity.Product;
 import com.example.artisian.repository.AdminApprovalRepository;
+import com.example.artisian.utils.ImageUtils;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,8 +25,20 @@ public class AdminApprovalService {
         return adminApprovalRepository.findAll();
     }
 
-    public AdminApproval addProduct(AdminApproval product) {
-        return adminApprovalRepository.save(product);
+//    public AdminApproval addProduct(AdminApproval product) {
+//        return adminApprovalRepository.save(product);
+//    }
+
+    public ResponseEntity<?> addProduct(ProductDTO productDTO) throws IOException {
+
+        var compressImage = ImageUtils.compressImage(productDTO.getImage().getBytes());
+        AdminApproval product = new AdminApproval(productDTO.getName(),
+                productDTO.getDescription(),
+                productDTO.getPrice(),
+                productDTO.getCategory(), productDTO.getRating(),
+                compressImage);
+        adminApprovalRepository.save(product);
+        return  ResponseEntity.ok(new MessageResponseDTO("product update successfull"));
     }
 
     public void deleteProductById(Long productId) {

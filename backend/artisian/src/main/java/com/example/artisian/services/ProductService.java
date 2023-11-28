@@ -44,37 +44,44 @@ public class ProductService {
     }
 
     private ProductReturnDTO convertEntityToDTO(Product user) {
-        ProductReturnDTO userDTO = new ProductReturnDTO();
-        userDTO.setId(user.getId());
-        userDTO.setName(user.getName());
-        userDTO.setDescription(user.getDescription());
-        userDTO.setPrice(user.getPrice());
-        userDTO.setRating(user.getRating());
-        userDTO.setCategory(user.getCategory());
+        ProductReturnDTO productReturnDTO = new ProductReturnDTO();
+        productReturnDTO.setId(user.getId());
+        productReturnDTO.setName(user.getName());
+        productReturnDTO.setDescription(user.getDescription());
+        productReturnDTO.setPrice(user.getPrice());
+        productReturnDTO.setRating(user.getRating());
+        productReturnDTO.setCategory(user.getCategory());
         if (user.getImage() != null) {
             String base64Image;
             try {
                 base64Image = Base64.getEncoder()
                         .encodeToString(ImageUtils.decompressImage(user.getImage()));
-                userDTO.setBase64Image(base64Image);
+                productReturnDTO.setBase64Image(base64Image);
             } catch (DataFormatException | IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
 
-        return userDTO;
+        return productReturnDTO;
     }
-    public ResponseEntity<?> addProduct(ProductDTO product) throws IOException {
+    public ResponseEntity<?> addProduct(ProductDTO productDTO) throws IOException {
 
-        var compressImage = ImageUtils.compressImage(product.getImage().getBytes());
-        Product product1 = new Product(product.getName(),
-                product.getDescription(),
-                product.getPrice(),
-                product.getCategory(), product.getRating(),
+        var compressImage = ImageUtils.compressImage(productDTO.getImage().getBytes());
+        Product product = new Product(productDTO.getName(),
+                productDTO.getDescription(),
+                productDTO.getPrice(),
+                productDTO.getCategory(), productDTO.getRating(),
                 compressImage);
-        productRepository.save(product1);
-        return  ResponseEntity.ok(new MessageResponseDTO("User registered successfully!"));
+        productRepository.save(product);
+        return  ResponseEntity.ok(new MessageResponseDTO("product update successfull"));
+    }
+
+    public ResponseEntity<?> addProductAfterApproval(Product product) throws IOException {
+
+
+        productRepository.save(product);
+        return  ResponseEntity.ok(new MessageResponseDTO("product update successfull"));
     }
 
 
@@ -83,16 +90,39 @@ public class ProductService {
         productRepository.deleteById(productId);
     }
 
-    public Optional<Product> getProductById(Long productId) {
+
+    public  Optional<Product> getProductById(Long productId) {
+
         return productRepository.findById(productId);
     }
 
-    public Product updateProduct(Product updatedProduct) {
-        return productRepository.save(updatedProduct);
+    public Product updateProduct(ProductDTO productDTO,Long id) throws IOException {
+
+        var compressImage = ImageUtils.compressImage(productDTO.getImage().getBytes());
+        Product product = new Product(productDTO.getName(),
+                productDTO.getDescription(),
+                productDTO.getPrice(),
+                productDTO.getCategory(), productDTO.getRating(),
+                compressImage);
+        product.setId(id);
+        return productRepository.save(product);
     }
-    public List<Product> getAllProductsByOrder() {
-        return productRepository.findAllByOrderByRatingDesc();
+    public List<ProductReturnDTO> getAllProductsByOrder() {
+        List<Product> users = productRepository.findAllByOrderByRatingDesc();
+        if (!users.isEmpty()) {
+            return users.stream()
+                    .filter(user -> user != null
+                    )
+                    .map(user -> {
+                        ProductReturnDTO userDTO = convertEntityToDTO(user);
+                        return userDTO;
+                    })
+                    .collect(Collectors.toList());
+        }
+        return new ArrayList<>();
     }
+
+
     // Other methods for modifying products
 }
 
