@@ -45,6 +45,7 @@ const handleSubmit = async (e) => {
       onSubmit(addedProduct);
 
       alert('Product added!');
+      window.location.reload();
       // Clear the form after successful submission
       setProductName('');
       setProductDescription('');

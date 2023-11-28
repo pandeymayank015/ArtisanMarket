@@ -16,6 +16,7 @@ const DeleteProductForm = ({ onRemove }) => {
           // If the deletion is successful
           onRemove(productId);
           alert('Product deleted successfully');
+          window.location.reload();
         } else if (response.status === 404) {
           // If the product is not found
           alert('Product not found');

@@ -44,7 +44,8 @@ const ModifyProductForm = ({ onSubmit }) => {
         setProductPrice('');
         setProductCategory('');
         setUserEmail('');
-        alert("Modification Success!!")
+        alert("Modification Success!!");
+        window.location.reload();
       } else {
         // Handle the case where the request is not successful
         alert('Error modifying product');
