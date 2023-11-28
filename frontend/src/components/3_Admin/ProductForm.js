@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { url } from '../../utils/ApiUrls'
+import { url, getUserEmail } from '../../utils/ApiUrls'
 import axios from 'axios';
 
 
@@ -17,7 +17,12 @@ const ProductForm = ({ onSubmit }) => {
     setProductImage(selectedImage);
   };
   
-
+  const fetchUserEmail = () => {
+    // Assuming getUserEmail() is a function that returns the email
+    const email = getUserEmail();
+    setUserEmail(email);
+    return email;
+  };
 const handleSubmit = async (e) => {
   e.preventDefault();
 
@@ -28,7 +33,8 @@ const handleSubmit = async (e) => {
   formData.append('price', productPrice);
   formData.append('category', productCategory);
   formData.append('image', productImage);
-  formData.append('userId', userEmail);
+  formData.append('userId', fetchUserEmail());  
+  // console.log('getUserEmail: ',getUserEmail());
   // console.log("formData:", formData);
   console.log([...formData.entries()]);
 
@@ -45,7 +51,7 @@ const handleSubmit = async (e) => {
       onSubmit(addedProduct);
 
       alert('Product added!');
-      window.location.reload();
+      // window.location.reload();
       // Clear the form after successful submission
       setProductName('');
       setProductDescription('');
@@ -125,14 +131,14 @@ const handleSubmit = async (e) => {
           accept="image/*"
           onChange={(e) => handleImageChange(e)} />
       </label>
-      <label>
+      {/* <label>
         User Email:
         <input
           type="text"
           value={userEmail}
           onChange={(e) => setUserEmail(e.target.value)}
         />
-      </label>
+      </label> */}
       <br />
 
       <button type="submit">Add Product</button>
