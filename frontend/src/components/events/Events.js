@@ -86,10 +86,10 @@ const Events = () => {
       );
 
       if (response.status === 200) {
-        alert('Event registration successful. Confirmation email has been sent.');
+        toast.success('Event registration successful. Confirmation email has been sent.');
         window.location.reload();
       } else {
-        alert('Error registering for the event.');
+        toast.error('Error registering for the event.');
       }
 
       console.log('Registration Response:', response.data);
@@ -163,12 +163,12 @@ const Events = () => {
           <h2 style={{ textAlign: 'center' }}>Events</h2>
           <p style={{ textAlign: 'center' }}>
             <Link to="/event-creation">
-              <button style={{ marginLeft: '20px', marginTop: '20px', width: '170px' }}>Create an Event</button>
+              <button style={{ marginLeft: '10px', marginTop: '20px', width: '170px' }}>Create an Event</button>
             </Link>
           </p>
 
           <div>
-            <h3 style={{ marginLeft: '70px', marginBottom: '30px' }}>All Events:</h3>
+            <h3 style={{marginBottom: '30px', marginTop: '30px',  textAlign: 'center' }}>All Events:</h3>
             <ul style={{ listStyle: 'none', padding: 0 }}>
               {events.map((event) => (
                 <li
