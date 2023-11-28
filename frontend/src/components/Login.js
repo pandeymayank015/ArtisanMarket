@@ -9,6 +9,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleLogin = async () => {
     try {
@@ -21,9 +22,12 @@ const Login = () => {
 
         // Store user details in localStorage
         localStorage.setItem('currentUser', JSON.stringify({ username, email, roles }));
-  
+
+        // Update the authentication status
+        setIsAuthenticated(true);
         // Redirect to the dashboard with the username as a parameter
-        navigate("/resource-center");
+        navigate("/resource-center", { replace: true }); // Replace the current entry in the history stack
+        window.location.reload(); // Reload the page
       }
      
 
