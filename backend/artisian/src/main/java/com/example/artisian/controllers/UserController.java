@@ -40,4 +40,6 @@ public class UserController {
         userService.deleteProductByEmail(userEmail);
         return new ResponseEntity<>("Deleted", HttpStatus.OK);
     }
+
+
 }

@@ -10,6 +10,7 @@ import com.example.artisian.entity.Product;
 import com.example.artisian.repositories.UserRepository;
 import com.example.artisian.repository.ProductRepository;
 import com.example.artisian.utils.ImageUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +39,7 @@ public class ProductService {
         if (!users.isEmpty()) {
             return users.stream()
                     .filter(user -> user != null
-)
+                    )
                     .map(user -> {
                         ProductReturnDTO userDTO = convertEntityToDTO(user);
                         return userDTO;
@@ -71,6 +72,7 @@ public class ProductService {
 
         return productReturnDTO;
     }
+
     public ResponseEntity<?> addProduct(ProductDTO productDTO) throws IOException {
 
         var compressImage = ImageUtils.compressImage(productDTO.getImage().getBytes());
@@ -78,18 +80,17 @@ public class ProductService {
                 productDTO.getDescription(),
                 productDTO.getPrice(),
                 productDTO.getCategory(), productDTO.getRating(),
-                compressImage,productDTO.getUserId());
+                compressImage, productDTO.getUserId());
         productRepository.save(product);
-        return  ResponseEntity.ok(new MessageResponseDTO("product update successfull"));
+        return ResponseEntity.ok(new MessageResponseDTO("product update successfull"));
     }
 
     public ResponseEntity<?> addProductAfterApproval(Product product) throws IOException {
 
 
         productRepository.save(product);
-        return  ResponseEntity.ok(new MessageResponseDTO("product update successfull"));
+        return ResponseEntity.ok(new MessageResponseDTO("product update successfull"));
     }
-
 
 
     public void deleteProductById(Long productId) {
@@ -97,21 +98,49 @@ public class ProductService {
     }
 
 
-    public  Optional<Product> getProductById(Long productId) {
+    public Optional<Product> getProductById(Long productId) {
 
         return productRepository.findById(productId);
     }
 
-    public Product updateProduct(ProductReturnDTO productDTO,Long id) throws IOException {
-        byte[] decodedImage = ImageUtils.compressImage(Base64.getDecoder().decode(productDTO.getBase64Image()));
+    public Product updateProduct(ProductReturnDTO productDTO, Long id) throws IOException {
 
-        Product product = new Product(productDTO.getName(),
-                productDTO.getDescription(),
-                productDTO.getPrice(),
-                productDTO.getCategory(), productDTO.getRating(),decodedImage, productDTO.getUserId());
-        product.setId(id);
-        return productRepository.save(product);
+        if (productDTO != null && id != 0L) {
+            Optional<Product> fetchedProduct = productRepository.findById(id);
+
+            if (fetchedProduct.isPresent()) {
+                Product productEntity = fetchedProduct.get();
+                if (productDTO.getName() != null) {
+                    productEntity.setName(productDTO.getName());
+
+                }
+                if (productDTO.getCategory() != null) {
+                    productEntity.setCategory(productDTO.getCategory());
+
+                }
+                productEntity.setRating(productDTO.getRating());
+                if (productDTO.getDescription() != null) {
+                    productEntity.setDescription(productDTO.getDescription());
+
+                }
+
+                productEntity.setPrice(productDTO.getPrice());
+
+                productRepository.save(productEntity);
+
+                return productEntity;
+            }
+        }
+            return null;
+
     }
+
+
+
+
+
+
+
     public List<ProductReturnDTO> getAllProductsByOrder() {
         List<Product> users = productRepository.findAllByOrderByRatingDesc();
         if (!users.isEmpty()) {

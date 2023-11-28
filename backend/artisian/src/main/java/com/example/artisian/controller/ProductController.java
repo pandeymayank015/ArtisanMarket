@@ -28,6 +28,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -64,15 +65,10 @@ public class ProductController {
 
     @PutMapping("update/{productId}")
     @CrossOrigin(origins = "*")
-    public ResponseEntity<String> updateProduct(@PathVariable Long productId, @RequestBody ProductReturnDTO updatedProduct) throws IOException {
-        Optional<Product> product = productService.getProductById(productId);
-        if (product.isPresent()) {
-            updatedProduct.setId(productId); // Ensure the ID of the updated product matches the path variable ID
-            productService.updateProduct(updatedProduct,productId);
-            return new ResponseEntity<>("Product with ID " + productId + " has been updated", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Product with ID " + productId + " not found", HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<Product> updateProduct(@PathVariable Long productId, @RequestBody ProductReturnDTO updatedProduct) throws IOException {
+            return  ResponseEntity.ok(productService.updateProduct(updatedProduct,productId));
+
+
 }
 
 
