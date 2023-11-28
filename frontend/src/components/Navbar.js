@@ -18,6 +18,9 @@ function Navbar() {
         <li>
           <Link to="/events">Events</Link>
         </li>
+        <li>
+          <Link to="/ArtisanStoreManagement">Admin</Link>
+        </li>
       </ul>
     </nav>
   );
