@@ -1,0 +1,9 @@
+.blog-content {
+    text-align: justify;
+    line-height: 1.5;
+
+}
+
+.blog-image {
+    max-height: 10em;
+}

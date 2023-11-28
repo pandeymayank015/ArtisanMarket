@@ -1,23 +1,27 @@
 package com.example.artisian.controller;
-import com.example.artisian.entity.AdminApproval;
-import com.example.artisian.entity.Product;
-import com.example.artisian.entity.Wishlist;
-import com.example.artisian.services.AdminApprovalService;
-import com.example.artisian.services.ProductService;
-import com.example.artisian.services.WishlistService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.artisian.entity.Wishlist;
+import com.example.artisian.services.WishlistService;
+
 @RestController
 @RequestMapping("/api/wishlist")
 public class WishlistController {
     @Autowired
     private WishlistService wishlistService;
-//kova
+
+    // kova
     @PostMapping("/add")
     public ResponseEntity<String> addToWishlist(@RequestBody Wishlist wishlistItem) {
         wishlistService.addToWishlist(wishlistItem);
@@ -35,6 +39,5 @@ public class WishlistController {
         List<Wishlist> wishlist = wishlistService.getWishlistByUserId(userId);
         return ResponseEntity.ok(wishlist);
     }
-
 
 }

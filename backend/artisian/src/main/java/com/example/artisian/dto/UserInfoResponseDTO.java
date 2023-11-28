@@ -14,4 +14,12 @@ public class UserInfoResponseDTO {
     private String username;
     private String email;
     private List<String> roles;
+    private String jwtToken;
+
+    public UserInfoResponseDTO(Long id, String username, String email, List<String> roles) {
+        this.id=id;
+        this.username=username;
+        this.email=email;
+        this.roles=roles;
+    }
 }

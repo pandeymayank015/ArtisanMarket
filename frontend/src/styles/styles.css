@@ -41,21 +41,6 @@
   margin-bottom: 10px;
 }
 
-.artisan-name {
-  margin-bottom: 0px;
-}
-
-.artisan-profession {
-  margin-bottom: 0;
-}
-
-.artisan-info {
-  width: 90%;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
 
 .profile-pic {
   max-width: 150px;
@@ -86,49 +71,6 @@
   max-width: 100%;
   height: auto;
   border-radius: 5px;
-}
-
-.profile-section {
-  width: 90%;
-  margin: auto;
-}
-
-.blogs-container {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
-}
-
-.blog-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: center;
-}
-
-.blog-thumbnail {
-  max-width: 100%;
-  height: auto;
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-
-.blog-details {
-  text-align: center;
-}
-
-.blog-title {
-  font-size: 1.2em;
-  margin-bottom: 5px;
-  color: #333;
-}
-
-.blog-published {
-  font-style: italic;
-  color: #888;
-  margin-bottom: 0;
 }
 
 .upload-button-container {
@@ -218,14 +160,15 @@ nav {
   padding: 15px 0;
 }
 
-ul {
+nav ul {
   list-style: none;
   display: flex;
   justify-content: space-around;
 }
 
-li {
+nav ul li {
   margin: 0 15px;
+  max-height: 2em;
 }
 
 a {
@@ -240,4 +183,8 @@ h1 {
   text-align: center;
   color: #333;
   margin-top: 20px;
+}
+
+textarea {
+  border: 1px solid #cccccc;
 }

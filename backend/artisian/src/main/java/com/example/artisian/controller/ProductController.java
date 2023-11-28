@@ -1,5 +1,22 @@
 package com.example.artisian.controller;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.artisian.dto.ProductDTO;
 import com.example.artisian.dto.ProductReturnDTO;
 import com.example.artisian.entity.AdminApproval;
@@ -37,7 +54,6 @@ public class ProductController {
     public ResponseEntity<?> addProduct(@ModelAttribute ProductDTO product) throws IOException {
         return productService.addProduct(product);
     }
-
 
     @DeleteMapping("delete/{productId}")
     @CrossOrigin(origins = "*")
@@ -94,6 +110,31 @@ public class ProductController {
     public ResponseEntity<List<ProductReturnDTO>> getAllEntitiesInOrder() {
         List<ProductReturnDTO> products = productService.getAllProductsByOrder();
         return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+    @GetMapping("/featured/{limit}")
+    public ResponseEntity<List<Product>> getFeaturedProducts(@PathVariable int limit) {
+        if (limit > 0) {
+            return ResponseEntity.ok(productService.getFeaturedProducts(limit));
+        } else {
+            return ResponseEntity.internalServerError().body(null);
+        }
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<Map<String, List<Product>>> getCategorizedProducts() {
+        return ResponseEntity.ok(productService.getGroupedProducts());
+    }
+
+    @GetMapping("/search/{keyword}")
+    public ResponseEntity<Map<String, List<Product>>> getCategorizedProducts(@PathVariable String keyword,
+            @RequestParam(name = "category", required = false) String category) {
+        return ResponseEntity.ok(productService.getSearchedProducts(keyword, category));
+    }
+
+    @GetMapping("/categories")
+    public ResponseEntity<List<String>> getDistinctCategories() {
+        return ResponseEntity.ok(productService.getDistinctCategories());
     }
 
     // Other methods for editing, deleting products

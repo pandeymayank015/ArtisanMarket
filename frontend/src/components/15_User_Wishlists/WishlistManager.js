@@ -15,8 +15,8 @@ const WishlistManager = () => {
   };
 
   return (
-    <div>
-        <h2>Wishlist</h2>
+    <div>        
+      <h2>Wishlist</h2>
       <WishlistForm onAdd={handleAddItem} />
       <Wishlist wishlist={wishlist} onRemove={handleRemoveItem} />
     </div>

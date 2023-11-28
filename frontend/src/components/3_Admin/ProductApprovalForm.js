@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { url } from '../../utils/ApiUrls';
-
+// import '../../styles/ProductApprovalForm.css';
 
 const ProductApprovalForm = () => {
   const [productName, setProductName] = useState('');
@@ -64,8 +64,8 @@ const ProductApprovalForm = () => {
   };
 
   return (
-    <div>
-      <h2>Product Approval</h2>
+    <div className='view-container'>
+      <h1>Product Approval</h1>
       <div>
         <h3>Add Product for Approval</h3>
         <label>
