@@ -67,6 +67,11 @@ public class ProductController {
         return adminApprovalService.addProduct(product);
     }
 
+    @GetMapping("/adminApprove/products")
+    public ResponseEntity<List<ProductReturnDTO>> getAllAdminApprovalProducts() {
+        List<ProductReturnDTO> products = adminApprovalService.getAllProducts();
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
     @PutMapping("/approve/{productId}")
     @CrossOrigin(origins = "*")
 
