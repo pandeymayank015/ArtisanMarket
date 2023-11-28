@@ -20,6 +20,9 @@ public class Product {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
+    private String userId;
+
 
     @Column(nullable = false)
     private String description;
@@ -41,13 +44,14 @@ public class Product {
     }
 
 
-    public Product(String name, String description, double price, String category, int rating,byte[] image) {
+    public Product(String name, String description, double price, String category, int rating,byte[] image,String userId) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.category = category;
         this.rating = rating;
         this.image = image;
+        this.userId = userId;
     }
 
     // Getters and setters for id, name, description, price
@@ -108,5 +112,11 @@ public class Product {
         this.image = image;
     }
 
+    public String getUserId() {
+        return userId;
+    }
 
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }

@@ -36,7 +36,7 @@ public class AdminApprovalService {
                 productDTO.getDescription(),
                 productDTO.getPrice(),
                 productDTO.getCategory(), productDTO.getRating(),
-                compressImage);
+                compressImage, productDTO.getUserId());
         adminApprovalRepository.save(product);
         return  ResponseEntity.ok(new MessageResponseDTO("product update successfull"));
     }

@@ -16,5 +16,6 @@ public class ProductDTO {
     private Double price;
     private int rating;
     private String category;
+    private String userId;
     private MultipartFile image;
 }

@@ -74,7 +74,7 @@ public class ProductController {
         AdminApproval adminApproval = adminApprovalService.getAdminApprovalByProductId(productId);
 
         if (adminApproval != null) {
-            Product productToAdd = new Product(adminApproval.getName(),adminApproval.getDescription(),adminApproval.getPrice(),adminApproval.getCategory(),adminApproval.getRating(),adminApproval.getImage());
+            Product productToAdd = new Product(adminApproval.getName(),adminApproval.getDescription(),adminApproval.getPrice(),adminApproval.getCategory(),adminApproval.getRating(),adminApproval.getImage(),adminApproval.getUserId());
 
             productService.addProductAfterApproval(productToAdd); // Add the product to the Product table
             adminApprovalService.deleteAdminApproval(adminApproval); // Delete from AdminApproval table

@@ -72,7 +72,7 @@ public class ProductService {
                 productDTO.getDescription(),
                 productDTO.getPrice(),
                 productDTO.getCategory(), productDTO.getRating(),
-                compressImage);
+                compressImage,productDTO.getUserId());
         productRepository.save(product);
         return  ResponseEntity.ok(new MessageResponseDTO("product update successfull"));
     }
@@ -103,7 +103,7 @@ public class ProductService {
                 productDTO.getDescription(),
                 productDTO.getPrice(),
                 productDTO.getCategory(), productDTO.getRating(),
-                compressImage);
+                compressImage, productDTO.getUserId());
         product.setId(id);
         return productRepository.save(product);
     }

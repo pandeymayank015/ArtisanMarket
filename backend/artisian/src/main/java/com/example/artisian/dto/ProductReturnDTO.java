@@ -4,6 +4,8 @@ public class ProductReturnDTO {
 
     private Long id;
     private String name;
+
+    private String userId;
     private String description;
     private Double price;
     private int rating;
