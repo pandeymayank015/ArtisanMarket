@@ -54,7 +54,7 @@ const ResourceCenter = () => {
                     </Link>
                 ))}
             </div>
-            <Link className="position-fixed mx-4 upload-button" to={`/upload/mayankmadan`} >Upload</Link>
+            <Link className="position-fixed mx-4 upload-button" to={`/upload/` + JSON.parse(localStorage.getItem('currentUser')).username} >Upload</Link>
         </div>
     )
 };
