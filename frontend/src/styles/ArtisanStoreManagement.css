@@ -2,113 +2,113 @@
 
 /* Add a banner-like background */
 body {
-    margin: 0;
-    padding: 0;
-    /* background: linear-gradient(to right, #add8e6, #ffffe0); Light blue to light yellow gradient */
-    font-family: 'Arial', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh; /* Ensure the body takes at least the full height of the viewport */
-  }
-  
-  /* Main container styles */
-  .container {
-    display: grid;
-    grid-template-rows: repeat(2, 1fr);
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    max-width: 800px;
-    padding: 20px;
-    /* background-color: white; */
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Heading styles */
-  h2 {
-    /* color: #333; */
-    text-align: center;
-  }
-  
-  /* ProductForm styles */
-  form {
-    /* background-color: #f9f9f9; */
-    padding: 15px;
-    border-radius: 8px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 8px;
-  }
-  
-  input,
-  textarea {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    /* border: 1px solid #ddd; */
-    border-radius: 4px;
-  }
-  
-  button {
-    /* background-color: #336699; /* Yellow color */
-    color: white; 
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  /* button:hover {
+  margin: 0;
+  padding: 0;
+  /* background: linear-gradient(to right, #add8e6, #ffffe0); Light blue to light yellow gradient */
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  /* Ensure the body takes at least the full height of the viewport */
+}
+
+/* Main container styles */
+.container {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 800px;
+  padding: 20px;
+  /* background-color: white; */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading styles */
+h2 {
+  /* color: #333; */
+  text-align: center;
+}
+
+/* ProductForm styles */
+form {
+  /* background-color: #f9f9f9; */
+  padding: 15px;
+  border-radius: 8px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+button {
+  /* background-color: #336699; /* Yellow color */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* button:hover {
     background-color: #e6b800; 
   } */
-  
-  /* ProductList styles */
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  li {
-    /* background-color: #fff; */
-    margin-bottom: 10px;
-    padding: 10px;
-    /* border: 1px solid #ddd; */
-    border-radius: 4px;
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  /* Update and Remove button styles */
-  li button {
-    /* background-color: #007bff; */
-    /* color: white; */
-    padding: 5px 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-left: 5px;
-  }
-  
-  /* li button:hover {
+
+/* ProductList styles */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  /* background-color: #fff; */
+  margin-bottom: 10px;
+  padding: 10px;
+  /* border: 1px solid #ddd; */
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Update and Remove button styles */
+li button {
+  /* background-color: #007bff; */
+  /* color: white; */
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+/* li button:hover {
     background-color: #0056b3;
   } */
-  
-  /* Functionality boxes */
-  .box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 20px;
-    /* background-color: rgb(253, 253, 34); */
-    border-radius: 8px;
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
-  }
-  
-  .dashboard{
-    text-align: center;
-  }
+
+/* Functionality boxes */
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  /* background-color: rgb(253, 253, 34); */
+  border-radius: 8px;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+}
+
+.dashboard {
+  text-align: center;
+}

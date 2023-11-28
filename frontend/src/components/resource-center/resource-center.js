@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './resource-center.css';
 import axios from 'axios';
-import { url } from '../../utils/ApiUrls';
+import { url, isArtisan } from '../../utils/ApiUrls';
 
 const ResourceCenter = () => {
     const [artisans, setArtisans] = useState([]);
@@ -42,7 +42,7 @@ const ResourceCenter = () => {
     }
     return (
         <div className='view-container p-4'>
-            <h2 className='p-3'>Artisan's Workshop</h2>
+            <h2 className='p-3'>Top Artisans in Nova Scotia</h2>
             <div className="artisans-grid">
                 {artisans.map((artisan) => (
                     <Link key={artisan.username} to={`/artisan/${artisan.username}`} className="artisan-link">
@@ -54,7 +54,10 @@ const ResourceCenter = () => {
                     </Link>
                 ))}
             </div>
-            <Link className="position-fixed mx-4 upload-button" to={`/upload/mayankmadan`} >Upload</Link>
+            {
+                isArtisan() ?
+                    (<Link className="position-fixed mx-4 upload-button" to={`/upload/` + JSON.parse(localStorage.getItem('currentUser')).username} >Upload</Link>)
+                    : <></>}
         </div>
     )
 };

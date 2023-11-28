@@ -1,5 +1,7 @@
 package com.example.artisian.entity;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 
 @Entity
@@ -24,16 +26,27 @@ public class AdminApproval {
     @Column(nullable = false)
     private int rating;
 
+    @Column(nullable = false)
+    private String userId;
+
+
     @OneToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
-    public AdminApproval(String name, String description, double price, String category, int rating) {
+    @Lob
+    @Type(type = "org.hibernate.type.ImageType")
+    private byte[] image;
+
+    public AdminApproval(String name, String description, double price, String category, int rating,byte[] image,String userId) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.category = category;
         this.rating = rating;
+        this.image = image;
+        this.userId =userId;
+
     }
 
     public AdminApproval() {
@@ -89,5 +102,19 @@ public class AdminApproval {
         this.rating = rating;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 }

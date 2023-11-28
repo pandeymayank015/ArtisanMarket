@@ -34,24 +34,4 @@ public class AuthController {
        return authService.logoutUser();
     }
 
-    /* Below given API's were only created for testing the role-based authorization. They can be removed. */
-
-    @GetMapping("/user")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<?> userAccess() {
-        return ResponseEntity.ok(new MessageResponseDTO("User Content Accessed!"));
-    }
-
-    @GetMapping("/admin")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> adminAccess() {
-        return ResponseEntity.ok(new MessageResponseDTO("Admin Content Accessed!"));
-    }
-
-    @GetMapping("/artisan")
-    @PreAuthorize("hasRole('ARTISAN')")
-    public ResponseEntity<?> artisanAccess() {
-        return ResponseEntity.ok(new MessageResponseDTO("Artisan Content Accessed!"));
-    }
-
 }
