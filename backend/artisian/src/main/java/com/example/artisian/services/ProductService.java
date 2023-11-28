@@ -7,15 +7,21 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.artisian.dto.ResourceDTO;
+import com.example.artisian.entities.UserEntity;
 import com.example.artisian.entity.Product;
+import com.example.artisian.repositories.UserRepository;
 import com.example.artisian.repository.ProductRepository;
 
 @Service
 public class ProductService {
     private final ProductRepository productRepository;
+    @Autowired
+    private EmailService emailService;
+    @Autowired
+    private UserRepository userRepository;
 
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
@@ -26,7 +32,9 @@ public class ProductService {
     }
 
     public Product addProduct(Product product) {
-        return productRepository.save(product);
+        Product p1 = productRepository.save(product);
+        sendNotificationsForNewProduct(product);
+        return p1;
     }
 
     public void deleteProductById(Long productId) {
@@ -83,5 +91,14 @@ public class ProductService {
         List<String> categories = productRepository.findAllDistinctCategories();
         categories.add("All");
         return categories;
+    }
+
+    private void sendNotificationsForNewProduct(Product product) {
+        List<UserEntity> users = userRepository.findAll();
+        for (UserEntity s1 : users) {
+            String subject = "New product added!";
+            String body = "A new product has been added: " + product.getName();
+            emailService.sendEmail(s1.getEmail(), subject, body);
+        }
     }
 }
