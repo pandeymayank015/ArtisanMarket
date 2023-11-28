@@ -48,13 +48,13 @@ const ResourceCenter = () => {
                     <Link key={artisan.username} to={`/artisan/${artisan.username}`} className="artisan-link">
                         <div className="artisan-card p-4">
                             <img src={'data:image/png;base64,' + artisan.base64Image} alt="Common Profile" className="profile-picture" />
-                            <h3 className='artisan-name'>{artisan.username}</h3>
+                            <h3 className='artisan-name'>{artisan.name}</h3>
                             <p className='artisan-profession'>{artisan.profession || "Artisan"}</p>
                         </div>
                     </Link>
                 ))}
             </div>
-            <Link className="position-fixed mx-4 upload-button" to={`/upload/mayankmadan`} >Upload</Link>
+            <Link className="position-fixed mx-4 upload-button" to={`/upload/` + JSON.parse(localStorage.getItem("currentUser")).username} >Upload</Link>
         </div>
     )
 };

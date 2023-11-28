@@ -135,28 +135,29 @@ const Marketplace = () => {
                 ))}
             </div> */}
             {categories.map((category, index) => (
-                <div key={index} className='py-4'>
-                    <h3 className='mx-3'>{category === "All" ? "Others" : category}</h3>
-                    <div className="row">
-                        {products[category] && Array.isArray(products[category]) ? (
-                            products[category].map((item, itemIndex) => (
-                                <div key={itemIndex} className="col-3 p-4">
-                                    <Card
-                                        title={item.name}
-                                        description={item.description}
-                                        price={item.price}
-                                        category={item.category}
-                                        rating={item.rating}
-                                        img={"https://images.unsplash.com/photo-1612077330269-788066d5ba58?crop=entropy&cs=srgb&fm=jpg&ixid=MXwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHw&ixlib=rb-1.2.1&q=85"}
-                                    />
-                                </div>
-                            ))
-                        ) : (
-                            <p className='text-center'>No products available for this category.</p>
-                        )}
-                    </div>
+                <div key={index} className='py-4 w-100'>
+                    {products[category] && Array.isArray(products[category]) && products[category].length > 0 && (
+                        <>
+                            <h3 className='mx-3'>{category === "All" ? "Others" : category}</h3>
+                            <div className="row">
+                                {products[category].map((item, itemIndex) => (
+                                    <div key={itemIndex} className="col-3 p-4">
+                                        <Card
+                                            title={item.name}
+                                            description={item.description}
+                                            price={item.price}
+                                            category={item.category}
+                                            rating={item.rating}
+                                            img={"https://images.unsplash.com/photo-1612077330269-788066d5ba58?crop=entropy&cs=srgb&fm=jpg&ixid=MXwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHw&ixlib=rb-1.2.1&q=85"}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </>
+                    )}
                 </div>
             ))}
+
 
         </div >
     );
