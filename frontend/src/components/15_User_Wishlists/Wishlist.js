@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { url } from '../../utils/ApiUrls';
-
+import '../../styles/Wishlist.css';
 const Wishlist = () => {
   const [userId, setUserId] = useState('');
   const [productId, setProductId] = useState('');
@@ -91,7 +91,7 @@ const Wishlist = () => {
 
   return (
     <div className='view-container'>        
-      <h2>Wishlist</h2>
+      <h1>Wishlist</h1>
       <label>
         User ID:
         <input type="text" value={userId} onChange={(e) => setUserId(e.target.value)} />
@@ -100,10 +100,12 @@ const Wishlist = () => {
         Product ID:
         <input type="number" min="0" value={productId} onChange={(e) => setProductId(e.target.value)} />
       </label>
+      <div className='buttons'>
       <button onClick={addToWishlist}>Add to Wishlist</button> &nbsp;&nbsp;
       <button onClick={removeFromWishlist}>Remove from Wishlist</button> &nbsp; &nbsp;
       <button onClick={getUserWishlist}>Get User Wishlist</button>
-
+      </div>
+      <p></p> 
       <h3>User Wishlist of Product:</h3>
     <table>
   <thead>

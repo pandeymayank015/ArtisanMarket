@@ -86,7 +86,7 @@ const UpdateProductRatingForm = () => {
 
   return (
     <div className='view-container'>
-      <h2>Update Product Rating</h2>
+      <h1>Update Product Rating</h1>
       <form onSubmit={handleUpdateRating}>
         <label>
           Product ID:

@@ -35,7 +35,7 @@ const DeleteProductForm = ({ onRemove }) => {
 
   return (
     <div>
-      <h3>Delete Product</h3>
+      {/* <h3>Delete Product</h3> */}
       <label>
         Product ID:
         <input
@@ -43,6 +43,7 @@ const DeleteProductForm = ({ onRemove }) => {
           onChange={(e) => setProductId(e.target.value)}
         />
       </label>
+      <p></p>
       <button onClick={handleDelete}>Delete Product</button>
       {/* {message && <p>{message}</p>} */}
 

@@ -1,11 +1,8 @@
 package com.example.artisian.services;
 
-import com.example.artisian.entities.UserEntity;
 import com.example.artisian.entity.Product;
 import com.example.artisian.repositories.UserRepository;
 import com.example.artisian.repository.ProductRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,20 +44,9 @@ public class ProductService {
     public Product updateProduct(Product updatedProduct) {
         return productRepository.save(updatedProduct);
     }
+
     public List<Product> getAllProductsByOrder() {
         return productRepository.findAllByOrderByRatingDesc();
     }
     // Other methods for modifying products
-        private void sendNotificationsForNewProduct(Product product) {
-            // Retrieve distinct emails of users who need to be notified
-            List<UserEntity> users = userRepository.findAll();
-            for(UserEntity s1 :users){
-            String subject = "New product added!";
-            String body = "A new product has been added: " + product.getName();
-            emailService.sendEmail(s1.getEmail(), subject, body);
-        }
-        }
 }
-
-
-
