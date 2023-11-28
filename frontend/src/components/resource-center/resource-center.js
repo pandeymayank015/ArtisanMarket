@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './resource-center.css';
 import axios from 'axios';
-import { url } from '../../utils/ApiUrls';
+import { url, isArtisan } from '../../utils/ApiUrls';
 
 const ResourceCenter = () => {
     const [artisans, setArtisans] = useState([]);
@@ -54,7 +54,10 @@ const ResourceCenter = () => {
                     </Link>
                 ))}
             </div>
-            <Link className="position-fixed mx-4 upload-button" to={`/upload/` + JSON.parse(localStorage.getItem('currentUser')).username} >Upload</Link>
+            {
+                isArtisan() ?
+                    (<Link className="position-fixed mx-4 upload-button" to={`/upload/` + JSON.parse(localStorage.getItem('currentUser')).username} >Upload</Link>)
+                    : <></>}
         </div>
     )
 };
