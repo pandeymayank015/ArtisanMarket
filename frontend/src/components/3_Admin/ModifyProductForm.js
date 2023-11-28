@@ -7,27 +7,31 @@ const ModifyProductForm = ({ onSubmit }) => {
   const [productDescription, setProductDescription] = useState('');
   const [productPrice, setProductPrice] = useState('');
   const [productCategory, setProductCategory] = useState('');
+  const [productImage, setProductImage] = useState(null);
+  const [userEmail, setUserEmail] = useState('');
 
+  const handleImageChange = (e) => {
+    // console.log('Image selected:', e.target.files[0]);
+    const selectedImage = e.target.files[0];
+    setProductImage(selectedImage);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Create a product object with the entered values
-    const newProduct = {
-      id:productID,
-      name: productName,
-      description: productDescription,
-      price: productPrice,
-      category: productCategory,
-    };
+    const formData = new FormData();
+    formData.append('userId', userEmail);
+    formData.append('id', productID);
+    formData.append('name', productName);
+    formData.append('description', productDescription);
+    formData.append('price', productPrice);
+    formData.append('category', productCategory);
+    formData.append('image', productImage);
 
     try {
-      // Send a request to the backend API to add the product
+      // Send a request to the backend API to update the product
       const response = await fetch(`${url}/products/update/${productID}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newProduct),
+        body: formData,
       });
 
       if (response.ok) {
@@ -39,6 +43,7 @@ const ModifyProductForm = ({ onSubmit }) => {
         setProductDescription('');
         setProductPrice('');
         setProductCategory('');
+        setUserEmail('');
         alert("Modification Success!!")
       } else {
         // Handle the case where the request is not successful
@@ -101,7 +106,21 @@ const ModifyProductForm = ({ onSubmit }) => {
           onChange={(e) => setProductCategory(e.target.value)}
         />
       </label>
-
+      <label>
+      Image:
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => handleImageChange(e)} />
+      </label>
+      <label>
+        User Email:
+        <input
+          type="text"
+          value={userEmail}
+          onChange={(e) => setUserEmail(e.target.value)}
+        />
+      </label>
       <br />
 
       {/* <button type="submit">Modify Product</button> */}

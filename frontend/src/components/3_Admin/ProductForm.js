@@ -9,6 +9,7 @@ const ProductForm = ({ onSubmit }) => {
   const [productPrice, setProductPrice] = useState('');
   const [productCategory, setProductCategory] = useState('');
   const [productImage, setProductImage] = useState(null);
+  const [userEmail, setUserEmail] = useState('');
   
   const handleImageChange = (e) => {
     // console.log('Image selected:', e.target.files[0]);
@@ -27,7 +28,7 @@ const handleSubmit = async (e) => {
   formData.append('price', productPrice);
   formData.append('category', productCategory);
   formData.append('image', productImage);
-  formData.append('user_id', '1');
+  formData.append('userId', userEmail);
   // console.log("formData:", formData);
   console.log([...formData.entries()]);
 
@@ -50,6 +51,7 @@ const handleSubmit = async (e) => {
       setProductPrice('');
       setProductCategory('');
       setProductImage(null); // Clear the selected image
+      setUserEmail('');
     } else {
       console.error('Failed to add product:', response.statusText);
     }
@@ -122,7 +124,14 @@ const handleSubmit = async (e) => {
           accept="image/*"
           onChange={(e) => handleImageChange(e)} />
       </label>
-
+      <label>
+        User Email:
+        <input
+          type="text"
+          value={userEmail}
+          onChange={(e) => setUserEmail(e.target.value)}
+        />
+      </label>
       <br />
 
       <button type="submit">Add Product</button>
