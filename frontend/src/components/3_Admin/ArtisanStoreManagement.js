@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-// import '../../styles/ArtisanStoreManagement.css';
+import '../../styles/3_admin.css';
 import ProductList from './ProductList';
 import ProductForm from './ProductForm';
 import ModifyProductForm from './ModifyProductForm';
@@ -53,7 +53,10 @@ const ArtisanStoreManagement = () => {
 
       <div className="box">
       <h2>List Product(s)</h2>
+      <p></p>
         <button onClick={handleShowProductList}>List All Products</button>
+        <p></p>
+        <p></p>
         {showProductList && (
           <ProductList products={products} onUpdate={updateProduct} onRemove={removeProduct} />
         )}
