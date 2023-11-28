@@ -17,10 +17,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.artisian.dto.ProductDTO;
+import com.example.artisian.dto.ProductReturnDTO;
 import com.example.artisian.entity.AdminApproval;
 import com.example.artisian.entity.Product;
 import com.example.artisian.services.AdminApprovalService;
 import com.example.artisian.services.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -35,15 +46,14 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() {
-        List<Product> products = productService.getAllProducts();
+    public ResponseEntity<List<ProductReturnDTO>> getAllProducts() {
+        List<ProductReturnDTO> products = productService.getAllProducts();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
-        Product addedProduct = productService.addProduct(product);
-        return new ResponseEntity<>(addedProduct, HttpStatus.CREATED);
+    public ResponseEntity<?> addProduct(@ModelAttribute ProductDTO product) throws IOException {
+        return productService.addProduct(product);
     }
 
     @DeleteMapping("delete/{productId}")
@@ -55,36 +65,35 @@ public class ProductController {
 
     @PutMapping("update/{productId}")
     @CrossOrigin(origins = "*")
-    public ResponseEntity<String> updateProduct(@PathVariable Long productId, @RequestBody Product updatedProduct) {
-        Optional<Product> product = productService.getProductById(productId);
-        if (product.isPresent()) {
-            updatedProduct.setId(productId); // Ensure the ID of the updated product matches the path variable ID
-            productService.updateProduct(updatedProduct);
-            return new ResponseEntity<>("Product with ID " + productId + " has been updated", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Product with ID " + productId + " not found", HttpStatus.NOT_FOUND);
-        }
-    }
+    public ResponseEntity<Product> updateProduct(@PathVariable Long productId, @RequestBody ProductReturnDTO updatedProduct) throws IOException {
+            return  ResponseEntity.ok(productService.updateProduct(updatedProduct,productId));
+
+
+}
+
+
+
 
     @PostMapping("/user-add")
-    @CrossOrigin(origins = "*")
-    public ResponseEntity<String> addUserProduct(@RequestBody AdminApproval product) {
-        // Product addedProduct = productService.addProduct(product);
-        adminApprovalService.addProduct(product); // Send for admin approval
-        return new ResponseEntity<>("Product added and sent for admin approval", HttpStatus.CREATED);
+    public ResponseEntity<?> addUserProduct(@ModelAttribute ProductDTO product) throws IOException {
+        return adminApprovalService.addProduct(product);
     }
 
+    @GetMapping("/adminApprove/products")
+    public ResponseEntity<List<ProductReturnDTO>> getAllAdminApprovalProducts() {
+        List<ProductReturnDTO> products = adminApprovalService.getAllProducts();
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
     @PutMapping("/approve/{productId}")
     @CrossOrigin(origins = "*")
 
-    public ResponseEntity<String> approveProduct(@PathVariable Long productId) {
+    public ResponseEntity<String> approveProduct(@PathVariable Long productId) throws IOException {
         AdminApproval adminApproval = adminApprovalService.getAdminApprovalByProductId(productId);
 
         if (adminApproval != null) {
-            Product productToAdd = new Product(adminApproval.getName(), adminApproval.getDescription(),
-                    adminApproval.getPrice(), adminApproval.getCategory(), adminApproval.getRating());
+            Product productToAdd = new Product(adminApproval.getName(),adminApproval.getDescription(),adminApproval.getPrice(),adminApproval.getCategory(),adminApproval.getRating(),adminApproval.getImage(),adminApproval.getUserId());
 
-            productService.addProduct(productToAdd); // Add the product to the Product table
+            productService.addProductAfterApproval(productToAdd); // Add the product to the Product table
             adminApprovalService.deleteAdminApproval(adminApproval); // Delete from AdminApproval table
 
             return new ResponseEntity<>("Product added and moved from admin approval to product table", HttpStatus.OK);
@@ -94,8 +103,8 @@ public class ProductController {
     }
 
     @GetMapping("/byOrder")
-    public ResponseEntity<List<Product>> getAllEntitiesInOrder() {
-        List<Product> products = productService.getAllProductsByOrder();
+    public ResponseEntity<List<ProductReturnDTO>> getAllEntitiesInOrder() {
+        List<ProductReturnDTO> products = productService.getAllProductsByOrder();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 

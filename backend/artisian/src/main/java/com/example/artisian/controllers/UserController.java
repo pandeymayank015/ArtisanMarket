@@ -3,6 +3,7 @@ package com.example.artisian.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.artisian.dto.UserDTO;
 import com.example.artisian.services.UserService;
@@ -31,16 +33,12 @@ public class UserController {
         return ResponseEntity.ok(artisans);
     }
 
-    @PutMapping("/")
-    public ResponseEntity<UserDTO> updateProfile( @RequestBody UserDTO updatedProfile) throws Exception {
-        UserDTO profile = userService.updateProfile(updatedProfile);
-        return new ResponseEntity<>(profile, HttpStatus.OK);
-    }
 
-     @GetMapping("/{username}")
-    public ResponseEntity<UserDTO> getProfileById(@PathVariable String username) {
-        UserDTO profile = userService.getUser(username);
-        return new ResponseEntity<>(profile, HttpStatus.OK);
+    @DeleteMapping("delete/{userEmail}")
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<String> deleteProduct(@PathVariable String userEmail) {
+        userService.deleteProductByEmail(userEmail);
+        return new ResponseEntity<>("Deleted", HttpStatus.OK);
     }
 
 

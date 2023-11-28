@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { url } from '../../utils/ApiUrls'
+import axios from 'axios';
 
 
 const ProductForm = ({ onSubmit }) => {
@@ -7,45 +8,73 @@ const ProductForm = ({ onSubmit }) => {
   const [productDescription, setProductDescription] = useState('');
   const [productPrice, setProductPrice] = useState('');
   const [productCategory, setProductCategory] = useState('');
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const newProduct = {
-      "name": productName,
-      "description": productDescription,
-      "price": productPrice,
-      "category":productCategory
-    };
-
-    try {
-      const response = await fetch(url+'/api/products', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newProduct),
-      });
-
-      if (response.ok) {
-        const addedProduct = await response.json();
-        onSubmit(addedProduct);
-
-        alert("Product added!");
-        // Clear the form after successful submission
-        setProductName('');
-        setProductDescription('');
-        setProductPrice('');
-        setProductCategory('');
-
-      } else {
-        console.error('Failed to add product:', response.statusText);
-      }
-    } catch (error) {
-      alert('Error adding product:', error);
-      console.error('Error adding product:', error);
-    }
+  const [productImage, setProductImage] = useState(null);
+  const [userEmail, setUserEmail] = useState('');
+  
+  const handleImageChange = (e) => {
+    // console.log('Image selected:', e.target.files[0]);
+    const selectedImage = e.target.files[0];
+    setProductImage(selectedImage);
   };
+  
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  // Create a FormData object to handle the file upload
+  const formData = new FormData();
+  formData.append('name', productName);
+  formData.append('description', productDescription);
+  formData.append('price', productPrice);
+  formData.append('category', productCategory);
+  formData.append('image', productImage);
+  formData.append('userId', userEmail);
+  // console.log("formData:", formData);
+  console.log([...formData.entries()]);
+
+  try {
+    // Use Axios for the file upload
+    const response = await axios.post(url + '/products', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    if (response.status === 200) {
+      const addedProduct = response.data;
+      onSubmit(addedProduct);
+
+      alert('Product added!');
+      window.location.reload();
+      // Clear the form after successful submission
+      setProductName('');
+      setProductDescription('');
+      setProductPrice('');
+      setProductCategory('');
+      setProductImage(null); // Clear the selected image
+      setUserEmail('');
+    } else {
+      console.error('Failed to add product:', response.statusText);
+    }
+  } catch (error) {
+    alert('Error adding product:', error);
+    console.error('Error adding product:', error);
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.error('Server Error Data:', error.response.data);
+      console.error('Server Error Status:', error.response.status);
+      console.error('Server Error Headers:', error.response.headers);
+    } else if (error.request) {
+      // The request was made but no response was received
+      console.error('No Response Received:', error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.error('Error Message:', error.message);
+    }
+  }
+};
+
 
   return (
     <form onSubmit={handleSubmit}>
@@ -89,7 +118,21 @@ const ProductForm = ({ onSubmit }) => {
           onChange={(e) => setProductCategory(e.target.value)}
         />
       </label>
-
+      <label>
+      Image:
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => handleImageChange(e)} />
+      </label>
+      <label>
+        User Email:
+        <input
+          type="text"
+          value={userEmail}
+          onChange={(e) => setUserEmail(e.target.value)}
+        />
+      </label>
       <br />
 
       <button type="submit">Add Product</button>
@@ -98,111 +141,3 @@ const ProductForm = ({ onSubmit }) => {
 };
 
 export default ProductForm;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useState } from 'react';
-
-// const ProductForm = ({ onSubmit }) => {
-//   const [productName, setProductName] = useState('');
-//   const [productDescription, setProductDescription] = useState('');
-//   const [productPrice, setproductPrice] = useState('');
-//   const [productCategory, setproductCategory] = useState('');
-//   const url = 'http://localhost:3306/';
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-
-//     const newProduct = {
-//       "name": productName,
-//       "description": productDescription,
-//       "price": productPrice,
-//       "category":productCategory
-//     };
-
-//     onSubmit(newProduct);
-
-//     // Clear the form after submission
-//     setProductName('');
-//     setProductDescription('');
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit}>
-//       {/* <h3>Add Product</h3> */}
-//       <label>
-//         Product Name:
-//         <input
-//           type="text"
-//           value={productName}
-//           onChange={(e) => setProductName(e.target.value)}
-//         />
-//       </label>
-
-//       <br />
-
-//       <label>
-//         Product Description:
-//         <textarea
-//           value={productDescription}
-//           onChange={(e) => setProductDescription(e.target.value)}
-//         />
-//       </label>
-
-//       <br />
-
-//       <label>
-//         Price:
-//         <input
-//           type="number"
-//           value={productPrice}
-//           onChange={(e) => setproductPrice(e.target.value)}
-//         />
-//       </label>
-
-//       <br />
-
-//       <label>
-//         Category:
-//         <input
-//           type="text"
-//           value={productCategory}
-//           onChange={(e) => setproductCategory(e.target.value)}
-//         />
-//       </label>
-
-//       <br />
-
-//       <button type="submit">Add Product</button>
-//     </form>
-//   );
-// };
-
-// export default ProductForm;

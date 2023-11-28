@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; // Import Link from React Router
 
 import '../../styles/3_admin.css';
 import ProductList from './ProductList';
@@ -32,6 +33,21 @@ const ArtisanStoreManagement = () => {
   };
 
   return (
+    <div>
+      <br></br>
+      {/* <nav> */}
+      <ul>
+        <li>
+          <Link to="/ProductApprovalForm">Product Approval</Link>
+        </li>
+        <li>
+          <Link to="/UpdateProductRatingForm">Update Product Rating</Link>
+        </li>
+        <li>
+          <Link to="/Wishlist">Wish list</Link>
+        </li>
+        </ul>
+        {/* </nav> */}
     <div className='view-container'>
     <div className='dashboard'>
       <h1>Admin dashboard </h1>
@@ -61,6 +77,7 @@ const ArtisanStoreManagement = () => {
           <ProductList products={products} onUpdate={updateProduct} onRemove={removeProduct} />
         )}
       </div>
+    </div>
     </div>
     </div>
     </div>

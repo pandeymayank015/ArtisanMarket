@@ -31,6 +31,9 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
             <li>
               <Link to="/signup">Signup</Link>
             </li>
+            <li>
+          <Link to="/ArtisanStoreManagement">Admin</Link>
+        </li>
           </>
         )}
       </ul>

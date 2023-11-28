@@ -1,19 +1,26 @@
 package com.example.artisian.services;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import com.example.artisian.dto.MessageResponseDTO;
+import com.example.artisian.dto.ProductDTO;
+import com.example.artisian.dto.ProductReturnDTO;
+import com.example.artisian.dto.UserDTO;
+import com.example.artisian.entities.ERole;
 import com.example.artisian.entities.UserEntity;
 import com.example.artisian.entity.Product;
 import com.example.artisian.repositories.UserRepository;
 import com.example.artisian.repository.ProductRepository;
+import com.example.artisian.utils.ImageUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.util.*;
+
+import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.zip.DataFormatException;
 
 @Service
 public class ProductService {
@@ -27,31 +34,129 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public List<ProductReturnDTO> getAllProducts() {
+        List<Product> users = productRepository.findAll();
+        if (!users.isEmpty()) {
+            return users.stream()
+                    .filter(user -> user != null
+                    )
+                    .map(user -> {
+                        ProductReturnDTO userDTO = convertEntityToDTO(user);
+                        return userDTO;
+                    })
+                    .collect(Collectors.toList());
+        }
+        return new ArrayList<>();
     }
 
-    public Product addProduct(Product product) {
-        Product p1 = productRepository.save(product);
-        sendNotificationsForNewProduct(product);
-        return p1;
+    private ProductReturnDTO convertEntityToDTO(Product user) {
+        ProductReturnDTO productReturnDTO = new ProductReturnDTO();
+        productReturnDTO.setId(user.getId());
+        productReturnDTO.setName(user.getName());
+        productReturnDTO.setDescription(user.getDescription());
+        productReturnDTO.setPrice(user.getPrice());
+        productReturnDTO.setRating(user.getRating());
+        productReturnDTO.setCategory(user.getCategory());
+        productReturnDTO.setUserId(user.getUserId());
+        if (user.getImage() != null) {
+            String base64Image;
+            try {
+                base64Image = Base64.getEncoder()
+                        .encodeToString(ImageUtils.decompressImage(user.getImage()));
+                productReturnDTO.setBase64Image(base64Image);
+            } catch (DataFormatException | IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+        return productReturnDTO;
     }
+
+    public ResponseEntity<?> addProduct(ProductDTO productDTO) throws IOException {
+
+        var compressImage = ImageUtils.compressImage(productDTO.getImage().getBytes());
+        Product product = new Product(productDTO.getName(),
+                productDTO.getDescription(),
+                productDTO.getPrice(),
+                productDTO.getCategory(), productDTO.getRating(),
+                compressImage, productDTO.getUserId());
+        productRepository.save(product);
+        return ResponseEntity.ok(new MessageResponseDTO("product update successfull"));
+    }
+
+    public ResponseEntity<?> addProductAfterApproval(Product product) throws IOException {
+
+
+        productRepository.save(product);
+        return ResponseEntity.ok(new MessageResponseDTO("product update successfull"));
+    }
+
 
     public void deleteProductById(Long productId) {
         productRepository.deleteById(productId);
     }
 
+
     public Optional<Product> getProductById(Long productId) {
+
         return productRepository.findById(productId);
     }
 
-    public Product updateProduct(Product updatedProduct) {
-        return productRepository.save(updatedProduct);
+    public Product updateProduct(ProductReturnDTO productDTO, Long id) throws IOException {
+
+        if (productDTO != null && id != 0L) {
+            Optional<Product> fetchedProduct = productRepository.findById(id);
+
+            if (fetchedProduct.isPresent()) {
+                Product productEntity = fetchedProduct.get();
+                if (productDTO.getName() != null) {
+                    productEntity.setName(productDTO.getName());
+
+                }
+                if (productDTO.getCategory() != null) {
+                    productEntity.setCategory(productDTO.getCategory());
+
+                }
+                productEntity.setRating(productDTO.getRating());
+                if (productDTO.getDescription() != null) {
+                    productEntity.setDescription(productDTO.getDescription());
+
+                }
+
+                productEntity.setPrice(productDTO.getPrice());
+
+                productRepository.save(productEntity);
+
+                return productEntity;
+            }
+        }
+            return null;
+
     }
 
-    public List<Product> getAllProductsByOrder() {
-        return productRepository.findAllByOrderByRatingDesc();
+
+
+
+
+
+
+    public List<ProductReturnDTO> getAllProductsByOrder() {
+        List<Product> users = productRepository.findAllByOrderByRatingDesc();
+        if (!users.isEmpty()) {
+            return users.stream()
+                    .filter(user -> user != null
+                    )
+                    .map(user -> {
+                        ProductReturnDTO userDTO = convertEntityToDTO(user);
+                        return userDTO;
+                    })
+                    .collect(Collectors.toList());
+        }
+        return new ArrayList<>();
     }
+
+
     // Other methods for modifying products
 
     public List<Product> getFeaturedProducts(int limit) {

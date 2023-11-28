@@ -7,9 +7,11 @@ const ProductList = ({ onUpdate, onRemove }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(url+'/api/products');
+        const response = await fetch(url+'/products');
         if (response.ok) {
           const productsData = await response.json();
+          // console.log(productsData);
+          // console.log(typeof productsData.base64Image);
           setProducts(productsData);
         } else {
           console.error('Failed to fetch products:', response.statusText);
@@ -25,53 +27,43 @@ const ProductList = ({ onUpdate, onRemove }) => {
   return (
     <div>
       <h3>Product Listings</h3>
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}>
-            {product.id}<strong>{product.name}</strong> - {product.description}
-            {/* <button onClick={() => onUpdate(product.id, { ...product, name: 'Updated Name' })}>
-              Update
-            </button>
-            <button onClick={() => onRemove(product.id)}>Remove</button> */}
-          </li>
-        ))}
-      </ul>
+      <table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Image</th>
+      {/* Add more table headers for additional details */}
+    </tr>
+  </thead>
+  <tbody>
+    {products.map((product) => (
+      <tr key={product.id}>
+        <td>{product.id}</td>
+        <td>{product.name}</td>
+        {/* <td>{product.image}</td> */}
+        <td>
+          {product.base64Image && (
+            <img
+            src={`data:image/png;base64,${product.base64Image}`}  // Assuming the image is in PNG format; adjust accordingly
+            alt={`Image for ${product.name}`}
+            style={{ maxWidth: '50px', maxHeight: '50px' }} // Adjust the dimensions as needed
+          />
+          )}
+        </td>
+
+        {/* Add more table cells for additional details */}
+        {/* <td>{product.someOtherField}</td> */}
+      </tr>
+    ))}
+  </tbody>
+</table>
+
     </div>
   );
 };
 
 export default ProductList;
-
-
-// import React from 'react';
-
-// const ProductList = ({ products, onUpdate, onRemove }) => {
-//   return (
-//     <div>
-//       {/* <h3>List of Products</h3> */}
-//       <ul>
-//         {products.map((product) => (
-//           <li key={product.id}>
-//             <div>
-//               <strong>Name:</strong> {product.name}
-//             </div>
-//             <div>
-//               <strong>Description:</strong> {product.description}
-//             </div>
-//             <div>
-//               <button onClick={() => onUpdate(product.id, /* updatedProduct */)}>
-//                 Update
-//               </button>
-//               <button onClick={() => onRemove(product.id)}>Delete</button>
-//             </div>
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// };
-
-// export default ProductList;
 
 
 
