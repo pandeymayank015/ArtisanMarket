@@ -47,31 +47,31 @@ const UpdateProductRatingForm = () => {
       return;
     }
 
-    // const updatedProduct = {
-    //   ...product,
-    //   rating: newRating,
-    // };
-    const formData = new FormData();
-    formData.append('id', product.id);
-    formData.append('name', product.name);
-    formData.append('description', product.description);
-    formData.append('price', product.price);
-    formData.append('category', product.category);
-    formData.append('image', product.image);
-    formData.append('rating', newRating);
+    const updatedProduct = {
+      ...product,
+      rating: newRating,
+    };
+    // const formData = new FormData();
+    // formData.append('id', product.id);
+    // formData.append('name', product.name);
+    // formData.append('description', product.description);
+    // formData.append('price', product.price);
+    // formData.append('category', product.category);
+    // formData.append('image', product.base64Image);
+    // formData.append('rating', newRating);
 
     try {
-      // const response = await fetch(`${url}/products/update/${productId}`, {
-      //   method: 'PUT',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(updatedProduct),
-      // });
       const response = await fetch(`${url}/products/update/${productId}`, {
         method: 'PUT',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedProduct),
       });
+      // const response = await fetch(`${url}/products/update/${productId}`, {
+      //   method: 'PUT',
+      //   body: formData,
+      // });
 
       if (response.ok) {
         alert('Product rating updated successfully!');
