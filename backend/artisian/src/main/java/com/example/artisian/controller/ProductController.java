@@ -1,16 +1,25 @@
 package com.example.artisian.controller;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.artisian.entity.AdminApproval;
 import com.example.artisian.entity.Product;
 import com.example.artisian.services.AdminApprovalService;
 import com.example.artisian.services.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -36,7 +45,6 @@ public class ProductController {
         return new ResponseEntity<>(addedProduct, HttpStatus.CREATED);
     }
 
-
     @DeleteMapping("delete/{productId}")
     @CrossOrigin(origins = "*")
     public ResponseEntity<String> deleteProduct(@PathVariable Long productId) {
@@ -60,7 +68,7 @@ public class ProductController {
     @PostMapping("/user-add")
     @CrossOrigin(origins = "*")
     public ResponseEntity<String> addUserProduct(@RequestBody AdminApproval product) {
-//        Product addedProduct = productService.addProduct(product);
+        // Product addedProduct = productService.addProduct(product);
         adminApprovalService.addProduct(product); // Send for admin approval
         return new ResponseEntity<>("Product added and sent for admin approval", HttpStatus.CREATED);
     }
@@ -72,7 +80,8 @@ public class ProductController {
         AdminApproval adminApproval = adminApprovalService.getAdminApprovalByProductId(productId);
 
         if (adminApproval != null) {
-            Product productToAdd = new Product(adminApproval.getName(), adminApproval.getDescription(), adminApproval.getPrice(), adminApproval.getCategory(), adminApproval.getRating());
+            Product productToAdd = new Product(adminApproval.getName(), adminApproval.getDescription(),
+                    adminApproval.getPrice(), adminApproval.getCategory(), adminApproval.getRating());
 
             productService.addProduct(productToAdd); // Add the product to the Product table
             adminApprovalService.deleteAdminApproval(adminApproval); // Delete from AdminApproval table
@@ -87,6 +96,30 @@ public class ProductController {
     public ResponseEntity<List<Product>> getAllEntitiesInOrder() {
         List<Product> products = productService.getAllProductsByOrder();
         return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+    @GetMapping("/featured/{limit}")
+    public ResponseEntity<List<Product>> getFeaturedProducts(@PathVariable int limit) {
+        if (limit > 0) {
+            return ResponseEntity.ok(productService.getFeaturedProducts(limit));
+        } else {
+            return ResponseEntity.internalServerError().body(null);
+        }
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<Map<String, List<Product>>> getCategorizedProducts() {
+        return ResponseEntity.ok(productService.getGroupedProducts());
+    }
+
+    @GetMapping("/search/{keyword}")
+    public ResponseEntity<List<Product>> getCategorizedProducts(@PathVariable String keyword) {
+        return ResponseEntity.ok(productService.getSearchedProducts(keyword));
+    }
+
+    @GetMapping("/categories")
+    public ResponseEntity<List<String>> getDistinctCategories() {
+        return ResponseEntity.ok(productService.getDistinctCategories());
     }
 
     // Other methods for editing, deleting products

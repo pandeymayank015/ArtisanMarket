@@ -19,6 +19,7 @@ import ArtisanWorkshopProfile from './components/artisan-workshop-profile/Artisa
 import BlogDetails from './components/artisan-workshop-profile/BlogDetails';
 import UploadForm from './components/resource-center/UploadForm';
 import ResourceCenter from './components/resource-center/resource-center';
+import Marketplace from './components/marketplace/marketplace';
 const App = () => {
   return (
     <Router>
@@ -43,6 +44,7 @@ const App = () => {
           <Route path="/UpdateProductRatingForm" element={<UpdateProductRatingForm />} />
           <Route path="/Wishlist" element={<Wishlist />} />
           <Route path="/blog" element={<BlogDetails />} />
+          <Route path="/marketplace" element={<Marketplace />} />
         </Routes>
         <Footer />
       </div>

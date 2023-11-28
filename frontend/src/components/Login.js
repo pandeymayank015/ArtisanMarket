@@ -16,24 +16,24 @@ const Login = () => {
       console.log(response);
       if (response.status === 200) {
         const { jwtToken, username, email } = response.data;
-  
+
         // Store the JWT token in localStorage
         localStorage.setItem('jwtToken', jwtToken);
 
         // Store user details in localStorage
         localStorage.setItem('currentUser', JSON.stringify({ username, email }));
-  
+
         // Redirect to the dashboard with the username as a parameter
-        navigate("/resource-center");
+        navigate("/marketplace");
       }
       console.log(response.data);
-     
+
 
     } catch (error) {
       console.error('Error during login:', error);
     }
   };
-  
+
 
   return (
     <div className="page-container">
