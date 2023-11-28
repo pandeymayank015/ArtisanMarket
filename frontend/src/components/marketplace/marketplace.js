@@ -148,7 +148,7 @@ const Marketplace = () => {
                                             price={item.price}
                                             category={item.category}
                                             rating={item.rating}
-                                            img={"https://images.unsplash.com/photo-1612077330269-788066d5ba58?crop=entropy&cs=srgb&fm=jpg&ixid=MXwxNDU4OXwwfDF8cmFuZG9tfHx8fHx8fHw&ixlib=rb-1.2.1&q=85"}
+                                            img={`data:image/png;base64,${item.base64Image}`}
                                         />
                                     </div>
                                 ))}
