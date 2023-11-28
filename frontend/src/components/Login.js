@@ -15,18 +15,16 @@ const Login = () => {
       const response = await axios.post(url + '/auth/login', { username, password });
       console.log(response);
       if (response.status === 200) {
-        const { jwtToken, username, email } = response.data;
-  
+        const { jwtToken, username, email, roles } = response.data;
         // Store the JWT token in localStorage
         localStorage.setItem('jwtToken', jwtToken);
 
         // Store user details in localStorage
-        localStorage.setItem('currentUser', JSON.stringify({ username, email }));
+        localStorage.setItem('currentUser', JSON.stringify({ username, email, roles }));
   
         // Redirect to the dashboard with the username as a parameter
         navigate("/resource-center");
       }
-      console.log(response.data);
      
 
     } catch (error) {
