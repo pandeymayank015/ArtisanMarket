@@ -79,4 +79,9 @@ public class UserService {
         }
         return null;
     }
+
+    public void deleteProductByEmail(String emailId) {
+        userRepository.deleteByEmail(emailId);
+    }
+
 }
