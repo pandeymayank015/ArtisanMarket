@@ -1,6 +1,7 @@
 package com.example.artisian.services;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -55,15 +56,27 @@ public class ProductService {
     }
 
     public Map<String, List<Product>> getGroupedProducts() {
-        return productRepository.findAll().stream()
+        Map<String, List<Product>> productMap = productRepository.findAll().stream()
                 .collect(Collectors.groupingBy(Product::getCategory));
+        productMap.entrySet().removeIf(entry -> entry.getValue().isEmpty());
+        return productMap;
     }
 
-    public List<Product> getSearchedProducts(String searchKey) {
+    public Map<String, List<Product>> getSearchedProducts(String searchKey, String category) {
         if (searchKey != null && !searchKey.isEmpty()) {
-            return productRepository.findByProductNameContaining(searchKey);
+            Map<String, List<Product>> productMap = null;
+            if (category.equals("All")) {
+                productMap = productRepository.findByProductNameContaining(searchKey).stream()
+                        .collect(Collectors.groupingBy(Product::getCategory));
+
+            } else {
+                productMap = productRepository.findByProductNameContainingAndCategory(searchKey, category).stream()
+                        .collect(Collectors.groupingBy(Product::getCategory));
+            }
+            productMap.entrySet().removeIf(entry -> entry.getValue().isEmpty());
+            return productMap;
         }
-        return new ArrayList<>();
+        return Collections.emptyMap();
     }
 
     public List<String> getDistinctCategories() {

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.artisian.entity.AdminApproval;
@@ -113,8 +114,9 @@ public class ProductController {
     }
 
     @GetMapping("/search/{keyword}")
-    public ResponseEntity<List<Product>> getCategorizedProducts(@PathVariable String keyword) {
-        return ResponseEntity.ok(productService.getSearchedProducts(keyword));
+    public ResponseEntity<Map<String, List<Product>>> getCategorizedProducts(@PathVariable String keyword,
+            @RequestParam(name = "category", required = false) String category) {
+        return ResponseEntity.ok(productService.getSearchedProducts(keyword, category));
     }
 
     @GetMapping("/categories")

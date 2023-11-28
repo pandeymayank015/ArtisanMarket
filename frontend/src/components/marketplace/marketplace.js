@@ -30,12 +30,17 @@ const Marketplace = () => {
         console.log('Searching for:', searchText);
         setSearchText(searchText);
         try {
-            const response = await axios.get(url + '/products/search/' + `${searchText}`);
+            const response = await axios.get(url + '/products/search/' + `${searchText}` + '?category=' + selectedOption);
             console.log(response.data);
             setProducts(response.data);
         } catch (error) {
             console.error('Error during fetching artisans:', error);
         }
+    };
+
+    const handleReset = async () => {
+        setSearchText("");
+        setProducts(await getProducts());
     };
 
     const getProducts = async () => {
@@ -109,9 +114,10 @@ const Marketplace = () => {
                         </ul>
                     </div>
                     <div className="search_field">
-                        <input type="text" className="input" placeholder="Search" value={searchText}
+                        <input type="text" className="input w-75" placeholder="Search" value={searchText}
                             onChange={handleSearchInputChange} />
-                        <i className="fas fa-search" onClick={handleSearch}></i>
+                        <i className="fas fa-search mx-5" onClick={handleSearch}></i>
+                        <i className="fas fa-refresh" onClick={handleReset}></i>
                     </div>
                 </div>
             </div>
@@ -134,7 +140,7 @@ const Marketplace = () => {
                     <div className="row">
                         {products[category] && Array.isArray(products[category]) ? (
                             products[category].map((item, itemIndex) => (
-                                <div key={itemIndex} className="col-4 p-4">
+                                <div key={itemIndex} className="col-3 p-4">
                                     <Card
                                         title={item.name}
                                         description={item.description}
