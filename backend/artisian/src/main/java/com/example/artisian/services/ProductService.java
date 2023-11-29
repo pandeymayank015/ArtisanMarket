@@ -5,6 +5,7 @@ import com.example.artisian.dto.ProductDTO;
 import com.example.artisian.dto.ProductReturnDTO;
 import com.example.artisian.dto.UserDTO;
 import com.example.artisian.entities.ERole;
+import com.example.artisian.entities.RoleEntity;
 import com.example.artisian.entities.UserEntity;
 import com.example.artisian.entity.Product;
 import com.example.artisian.repositories.UserRepository;
@@ -82,6 +83,7 @@ public class ProductService {
                 productDTO.getCategory(), productDTO.getRating(),
                 compressImage, productDTO.getUserId());
         productRepository.save(product);
+        sendNotificationsForNewProduct(product);
         return ResponseEntity.ok(new MessageResponseDTO("product update successfull"));
     }
 
@@ -192,12 +194,15 @@ public class ProductService {
         return categories;
     }
 
-    private void sendNotificationsForNewProduct(Product product) {
-        List<UserEntity> users = userRepository.findAll();
-        for (UserEntity s1 : users) {
-            String subject = "New product added!";
-            String body = "A new product has been added: " + product.getName();
-            emailService.sendEmail(s1.getEmail(), subject, body);
+      private void sendNotificationsForNewProduct(Product product) {    
+            List<UserEntity> users = userRepository.findAll();
+            for (UserEntity user : users) {
+             RoleEntity userRole = user.getRole();
+            if (userRole != null && userRole.getName() == ERole.ROLE_ADMIN) {
+            String subject = "New product added needs your approval!";
+            String body = "A new product has been added needs your approval!! " + product.getName();
+            emailService.sendEmail(user.getEmail(), subject, body);
+            }
         }
-    }
+      }
 }
