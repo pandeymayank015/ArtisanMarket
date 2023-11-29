@@ -20,7 +20,7 @@ const UserProfile = () => {
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         console.log('Current User:', currentUser);
 
-        const response = await axios.get(url + `/api/users/${currentUser?.username}`);
+        const response = await axios.get(url + `/users/${currentUser?.username}`);
         setUserInfo({
           ...response.data,
           profilePicture: response.data.base64Image,
@@ -35,7 +35,7 @@ const UserProfile = () => {
 
   const handleUpdateProfile = async () => {
     try {
-      await axios.put(url + '/api/users/', userInfo);
+      await axios.put(url + '/users/', userInfo);
       console.log('User profile updated successfully!');
       setShowToast(true); 
     } catch (error) {

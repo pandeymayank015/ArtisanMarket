@@ -24,7 +24,7 @@ const ArtisanProfile = () => {
         console.log('Current User:', currentUser);
 
         // Make an API call to get artisan profile data, including the image
-        const response = await axios.get(url + `/api/users/${currentUser?.username}`);
+        const response = await axios.get(url + `/users/${currentUser?.username}`);
         setArtisanInfo({
           ...response.data,
           profilePicture: response.data.base64Image, // Assuming the base64 image is returned in the API response
@@ -39,7 +39,7 @@ const ArtisanProfile = () => {
 
   const handleUpdateProfile = async () => {
     try {
-      await axios.put(url + '/api/users/', artisanInfo);
+      await axios.put(url + '/users/', artisanInfo);
       console.log('User profile updated successfully!');
       setShowToast(true); // Show the toast message after updating the profile
     } catch (error) {
