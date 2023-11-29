@@ -17,7 +17,7 @@ const CommunityForum = () => {
  
   const fetchThreads = async () => {
     try {
-      const response = await axios.get(url+'/api/threads/getAll');
+      const response = await axios.get(url+'/threads/getAll');
       setThreads(response.data);
     } catch (error) {
       console.error('Error fetching threads:', error);
@@ -40,7 +40,7 @@ const CommunityForum = () => {
           threadContent: newThread.content,
         };
    
-        await axios.post(url+'/api/threads/create', threadPayload);
+        await axios.post(url+'/threads/create', threadPayload);
    
         fetchThreads();
    
