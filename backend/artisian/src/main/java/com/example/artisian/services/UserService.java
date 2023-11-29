@@ -156,4 +156,10 @@ public class UserService {
         return convertEntityToDTO( userRepository.save(existingProfile));
     }
 
+
+    public void deleteProductByEmail(String emailId) {
+        userRepository.deleteByEmail(emailId);
+    }
+
+
 }

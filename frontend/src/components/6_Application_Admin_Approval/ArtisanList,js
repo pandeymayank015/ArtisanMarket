@@ -1,0 +1,26 @@
+// // ArtisanList.js
+// import React, { useState, useEffect } from 'react';
+// import ArtisanProfile from './ArtisanProfile';
+// import { fetchArtisans } from '../api'; // Replace with your actual API functions
+
+// const ArtisanList = () => {
+//   const [artisans, setArtisans] = useState([]);
+
+//   useEffect(() => {
+//     // Fetch the list of artisans from the server
+//     fetchArtisans()
+//       .then((data) => setArtisans(data))
+//       .catch((error) => console.error('Error fetching artisans:', error));
+//   }, []);
+
+//   return (
+//     <div>
+//       <h2>Artisan List</h2>
+//       {artisans.map((artisan) => (
+//         <ArtisanProfile key={artisan.id} artisan={artisan} />
+//       ))}
+//     </div>
+//   );
+// };
+
+// export default ArtisanList;

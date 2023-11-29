@@ -4,7 +4,7 @@ import './marketplace.css';
 
 const Slide = ({ imageSrc, title, subtitle }) => (
     <>
-        <img src={imageSrc || "https://picsum.photos/id/1/1280/500"} alt={title} />
+        <img src={`data:image/png;base64,${imageSrc}`} alt={title} />
         <div className="carousel-caption">
             <h3 className="carousel-caption-title">{title}</h3>
             <p className="carousel-caption-subtitle">{subtitle}</p>
@@ -323,7 +323,7 @@ const Carousel = ({
                             startAutoSliding();
                         }}
                     >
-                        <Slide imageSrc={el.thumbnail} title={el.name} subtitle={el.description} />
+                        <Slide imageSrc={el.base64Image} title={el.name} subtitle={el.description} />
                     </div>
                 );
             })}

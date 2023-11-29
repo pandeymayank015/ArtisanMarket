@@ -1,11 +1,21 @@
 package com.example.artisian.entity;
 
+import org.hibernate.annotations.Type;
+import org.springframework.web.multipart.MultipartFile;
+
+import org.hibernate.annotations.Type;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import javax.persistence.*;
+import javax.persistence.*;
+import java.io.IOException;
 
 //kova
 @Entity
@@ -19,6 +29,10 @@ public class Product {
     private String name;
 
     @Column(nullable = false)
+    private String userId;
+
+
+    @Column(nullable = false)
     private String description;
 
     @Column(nullable = false)
@@ -29,17 +43,31 @@ public class Product {
 
     @Column(nullable = false)
     private int rating;
+    @Lob
+    @Type(type = "org.hibernate.type.ImageType")
+    private byte[] image;
 
     public Product() {
         // Default constructor
     }
 
-    public Product(String name, String description, double price, String category, int rating) {
+
+    public Product(String name, String description, double price, String category, int rating,byte[] image,String userId) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.category = category;
         this.rating = rating;
+        this.image = image;
+        this.userId = userId;
+    }
+    public Product(String name, String description, double price, String category, int rating,String userId) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.category = category;
+        this.rating = rating;
+        this.userId = userId;
     }
 
     // Getters and setters for id, name, description, price
@@ -90,5 +118,21 @@ public class Product {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

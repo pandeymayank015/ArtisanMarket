@@ -8,7 +8,7 @@ const Wishlist = () => {
 
   const addToWishlist = async () => {
     try {
-      const response = await fetch(`${url}/api/wishlist/add`, {
+      const response = await fetch(`${url}/wishlist/add`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -30,12 +30,13 @@ const Wishlist = () => {
 
   const removeFromWishlist = async () => {
     try {
-      const response = await fetch(`${url}/api/wishlist/remove/${userId}/${productId}`, {
+      const response = await fetch(`${url}/wishlist/remove/${userId}/${productId}`, {
         method: 'DELETE',
       });
 
       if (response.ok) {
         alert('Product removed from wishlist');
+        window.location.reload();
         // You can add further logic here, such as updating the UI or fetching the updated wishlist.
       } else {
         alert('Error removing product from wishlist');
@@ -49,12 +50,13 @@ const Wishlist = () => {
 
   const getUserWishlist = async () => {
     try {
-      const response = await fetch(`${url}/api/wishlist/${userId}`);
+      const response = await fetch(`${url}/wishlist/${userId}`);
       if (response.ok) {
         const wishlistData = await response.json();
+        alert("Fetch done!");
   
         // Fetch all products
-        const productsResponse = await fetch(`${url}/api/products`);
+        const productsResponse = await fetch(`${url}/products`);
         if (!productsResponse.ok) {
           console.error('Error fetching all products');
           alert('Error fetching wishlist');
@@ -110,10 +112,11 @@ const Wishlist = () => {
     <table>
   <thead>
     <tr>
-      <th>|&nbsp;ID&nbsp;|</th>
-      <th>&nbsp;Name&nbsp;|</th>
-      <th>&nbsp;Price&nbsp;|</th>
-      <th>&nbsp;Category&nbsp;|</th>
+      <th>&nbsp;ID&nbsp;</th>
+      <th>&nbsp;Name&nbsp;</th>
+      <th>&nbsp;Price&nbsp;</th>
+      <th>&nbsp;Category&nbsp;</th>
+      <th>&nbsp;Image&nbsp;</th>
       {/* Add more table headers for additional details */}
     </tr>
   </thead>
@@ -124,6 +127,13 @@ const Wishlist = () => {
         <td>&nbsp;{item.name}&nbsp;</td>
         <td>&nbsp;{item.price}&nbsp;</td>
   <td>&nbsp;{item.category}&nbsp;</td>      
+  {item.base64Image && (
+            <img
+            src={`data:image/png;base64,${item.base64Image}`}  // Assuming the image is in PNG format; adjust accordingly
+            alt={`Image for ${item.name}`}
+            style={{ maxWidth: '50px', maxHeight: '50px' }} // Adjust the dimensions as needed
+          />
+          )}
       </tr>
     ))}
   </tbody>
